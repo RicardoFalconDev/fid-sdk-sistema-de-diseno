@@ -748,7 +748,7 @@ function applyBranding(frame, cfg) {
     <div class="step"><small>Componente</small><code>background: var(--button-primary-bg)</code></div>
   </div>
   <h2 id="col-marca">Marca del cliente</h2>
-  <p>El SDK tiene un solo tema, claro. Lo que cambia entre integraciones es la marca: del color principal sale toda la escala de marca; el resto queda igual.</p>
+  <p>El SDK tiene un solo tema, claro. Lo que cambia entre integraciones es la marca: del color principal sale toda la escala de marca; el resto queda igual. Marca 1, 2 y 3 son ejemplos de marcas de clientes.</p>
   <div class="tablewrap"><table><thead><tr><th>Marca</th><th>primary</th><th>primaryText</th><th>Escala de marca (pasos 1 a 12)</th><th>Texto sobre el botón</th></tr></thead><tbody id="brandTable"></tbody></table></div>
   <h2 id="col-grupos">Grupos de tokens</h2>
   <div class="tablewrap"><table><thead><tr><th>Grupo</th><th>Para qué</th><th>Tokens</th><th>Ejemplo</th></tr></thead><tbody id="groupTable"></tbody></table></div>
@@ -798,7 +798,7 @@ function applyBranding(frame, cfg) {
  </div>
  <div class="panel" data-tab="tokens" data-label="Tokens" hidden>
   <h2 id="col-ref">Referencia de tokens</h2>
-  <p>Todos los tokens semánticos de color, por grupo. Elegí una marca para ver cómo cambian los valores: los marcados como <span class="badge">Marca</span> se recalculan; los demás quedan fijos. Pasá el mouse por un valor para copiarlo.</p>
+  <p>Todos los tokens semánticos de color, por grupo. Elegí una marca de ejemplo para ver cómo cambian los valores: los marcados como <span class="badge">Marca</span> se recalculan; los demás quedan fijos. Pasá el mouse por un valor para copiarlo.</p>
   <div class="brandpick" id="brandPick" role="group" aria-label="Marca de ejemplo"></div>
   <div id="tokGroups"></div>
   <h2 id="col-prim">Primitivos</h2>
@@ -1286,7 +1286,7 @@ function level(r) { return r >= 7 ? 'AAA' : r >= 4.5 ? 'AA' : null; }
 var STEPS = { 1: [3, 'w'], 2: [5, 'w'], 3: [10, 'w'], 4: [15, 'w'], 5: [22, 'w'], 6: [29, 'w'], 7: [39, 'w'], 8: [54, 'w'], 9: [100, 'p'], 10: [97, 'b'], 11: [87, 'b'], 12: [46, 'b'] };
 function mix(hex, pct, w) { var h = norm(hex), t = pct / 100, o = w === 'w' ? 255 : 0; return '#' + [1, 3, 5].map(function (i) { var v = Math.round(parseInt(h.slice(i, i + 2), 16) * t + o * (1 - t)); return ('0' + v.toString(16)).slice(-2); }).join('').toUpperCase(); }
 function accent(primary, n) { var s = STEPS[n]; return s[1] === 'p' ? norm(primary) : mix(primary, s[0], s[1]); }
-var BRANDS = [{ n: 'FID', primary: '#2A39D0', text: '#FFFFFF' }, { n: 'Violeta', primary: '#6D28D9', text: '#FFFFFF' }, { n: 'Esmeralda', primary: '#0B6E4F', text: '#FFFFFF' }, { n: 'Amarillo', primary: '#F5C518', text: '#1A1A1A' }];
+var BRANDS = [{ n: 'FID (por defecto)', primary: '#2A39D0', text: '#FFFFFF' }, { n: 'Marca 1', primary: '#6D28D9', text: '#FFFFFF' }, { n: 'Marca 2', primary: '#0B6E4F', text: '#FFFFFF' }, { n: 'Marca 3', primary: '#F5C518', text: '#1A1A1A' }];
 function tok(name) { return DATA.semantic.filter(function (t) { return t.name === name; })[0]; }
 function resolve(name, b) { if (name === '--button-primary-text') return b.text; var t = tok(name), m = /^--accent-(\d+)$/.exec(t.ref || '') || /^--accent-(\d+)$/.exec(name); return m ? accent(b.primary, +m[1]) : t.value; }
 function groupOf(name) { var g = name.replace(/^--/, '').split('-')[0]; if (g === 'accent') g = 'brand'; if (g === 'overlay') g = 'decor'; return g; }
