@@ -55,12 +55,12 @@ CON_ARO = {'of', 'pf'}
 # Partes donde no se informa el radio medido (la forma es del ícono o del componente).
 SIN_RADIO = {'sp', 'card', 'bg', 'foot'}
 
-# Una página por flujo, en el orden de Figma.
+# Una página por flujo, en el orden que pidió el usuario.
 FLOW_PAGES = [
- ('p-firmar', 'Firmar documento'),
- ('p-olvide', 'Olvidé mi clave de firma'),
  ('p-alta', 'Flujo Alta'),
+ ('p-firmar', 'Firmar documento'),
  ('p-errores', 'Errores'),
+ ('p-olvide', 'Olvidé mi clave de firma'),
 ]
 
 # Nombre de la variación según lo que tiene la pantalla.

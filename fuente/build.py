@@ -161,7 +161,7 @@ def pantallas_build():
             data.append({'t': t, 'sec': g['sec'], 'v': vs})
         pant[pid] = data
         n = sum(len(g['v']) for g in data)
-        h = ['<section class="page" id="pg-%s" data-title="%s" data-g="Tokens en las pantallas" data-desc="%s" hidden>' % (pid, e(flow), e('%d pantallas y %d variaciones del flujo, exportadas de Figma, con los tokens de cada parte.' % (len(data), n))),
+        h = ['<section class="page" id="pg-%s" data-title="%s" data-g="Ejemplos de tokens en pantallas" data-desc="%s" hidden>' % (pid, e(flow), e('%d pantallas y %d variaciones del flujo, exportadas de Figma, con los tokens de cada parte.' % (len(data), n))),
              ' <div class="panel" data-tab="resumen" data-label="Resumen">',
              '<p>Las pantallas de desktop del flujo, exportadas de Figma (archivo “FID SDK — Variables”, página Flujo) sin el header, que lo pone el integrador. Elegí la variación de cada pantalla y pasá el mouse por cada parte: a la derecha ves sus tokens separados por función (fondo, borde, texto, tipografía, fuente y radio). Los tokens son los del paquete (<code>DESIGN.md</code>), que es lo que tenés que usar en código. Cuando un valor de Figma no tiene token en el paquete, se marca como “Sin token”.</p>']
         for gi, g in enumerate(data):
