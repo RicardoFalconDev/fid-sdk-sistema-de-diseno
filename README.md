@@ -1,14 +1,14 @@
 # FID SDK · Sistema de diseño
 
-La documentación completa del SDK de FID: fundamentos, componentes, personalización, accesibilidad y código.
+La documentación completa del SDK de FID: fundamentos, tokens en las pantallas, personalización, accesibilidad y código.
 
 **[Abrir el sistema de diseño →](https://ricardofalcondev.github.io/fid-sdk-sistema-de-diseno/)**
 
 | Sección | Páginas |
 |---|---|
 | Empezar | Introducción, Personalización |
-| Fundamentos | Color, Tipografía, Espaciado, Radios y bordes, Elevación, Íconos, Ilustraciones y Lotties |
-| Componentes | Botones, Controles, Contenido |
+| Fundamentos | Color, Tipografía, Espaciado, Radios y bordes, Íconos, Ilustraciones y Lotties |
+| Tokens en las pantallas | Firmar documento, Olvidé mi clave de firma, Flujo Alta, Errores: las 64 pantallas de desktop exportadas de Figma, con el token de cada parte |
 | Calidad | Accesibilidad, Lista de verificación |
 | Recursos | Enlaces, contenido del paquete y trabajo con IA |
 

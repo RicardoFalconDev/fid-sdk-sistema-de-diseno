@@ -18,18 +18,11 @@ LINKS = {
     'LINK_DRIVE': 'https://drive.google.com/drive/folders/1ErW-_ImyoMbPjmgqAmvuWtwEqSEJ39Cj',
 }
 
-# Estilos de efecto del archivo de Figma "FID SDK — Variables" (no están en tokens.css).
-SHADOWS = [
-    {'name': 'shadow/sm', 'css': '0 1px 4px rgba(12, 12, 13, 0.05)', 'layers': 1},
-    {'name': 'shadow/4dp', 'css': '0 0 0 rgba(72, 70, 82, 0.06), 0 1px 2px rgba(72, 70, 82, 0.05), 0 4px 4px rgba(72, 70, 82, 0.05), 0 9px 5px rgba(72, 70, 82, 0.03), 0 15px 6px rgba(72, 70, 82, 0.01), 0 24px 7px rgba(72, 70, 82, 0)', 'layers': 6},
-    {'name': 'shadow/elevation-1', 'css': '0 4px 6px rgba(33, 33, 33, 0.04), 0 4px 50px rgba(33, 33, 33, 0.08)', 'layers': 2},
-]
-
 read = lambda p: Path(p).read_text(encoding='utf-8')
 
 # ── Pantallas del SDK con sus tokens (ver pantallas_tokens.py); se arma después de leer tokens.json ──
 sys.path.insert(0, str(HERE))
-from pantallas_tokens import SCREENS
+from pantallas_tokens import KEYS, FLOW_PAGES, ESTADOS
 md = read(PKG / 'DESIGN.md')
 tokens = json.loads(read(PKG / 'tokens.json'))
 
@@ -53,28 +46,56 @@ def tk_corto(name):
     return v.split(',')[0].strip().strip("'\"") if ',' in v else v
 
 
-def pantallas_page():
+PANT_SCREENS = json.loads(read(HERE / 'pantallas.json'))
+
+
+def pant_label(s):
+    keys = {k for k, _ in s['spots']}
+    base = s['title'] or re.sub(r'^\d+\s*·\s*', '', s['name']) or s['path'].split(' / ')[-1]
+    est = next((t for k, t in ESTADOS if k in keys), '') if s['title'] else ''
+    return base + (' · ' + est if est else '')
+
+
+PANT = {}
+for pid, flow in FLOW_PAGES:
+    lst = []
+    for s in [x for x in PANT_SCREENS if x['flow'] == flow]:
+        spots = []
+        for n, (k, rects) in enumerate(s['spots'], 1):
+            nombre, toks, marca, nota = KEYS[k]
+            spots.append({'n': n, 'l': nombre, 't': [[t, tk_corto(t)] for t in toks], 'm': marca, 'd': nota, 'big': rects[0][2] >= 504,
+                          'r': [[round(x / 840 * 100, 3), round(y / s['h'] * 100, 3), round(w / 840 * 100, 3), round(max(h, 2) / s['h'] * 100, 3)] for x, y, w, h in rects]})
+        lst.append({'id': s['id'], 'f': 'pantallas/%s.png' % s['id'].replace(':', '-'), 'h': s['h'], 'sec': s['path'], 'l': pant_label(s), 'spots': spots})
+    vistos = {}
+    for x in lst:
+        vistos[x['l']] = vistos.get(x['l'], 0) + 1
+        if vistos[x['l']] > 1:
+            x['l'] += ' (%d)' % vistos[x['l']]
+    PANT[pid] = lst
+
+
+def flow_page(pid, flow):
     e = lambda t: html.escape(str(t))
-    h = ['<section class="page" id="pg-pantallas" data-title="Tokens en las pantallas" data-g="Componentes" data-desc="Pantallas reales del SDK, exportadas de Figma, con el token que se aplica en cada parte." hidden>',
-         ' <div class="panel" data-tab="resumen" data-label="Resumen">',
-         '<p>Cada pantalla sale tal cual de Figma (archivo “FID SDK — Variables”, página Flujo). Pasá el mouse por una parte de la pantalla o por la lista para ver qué token la pinta. Los tokens son los del paquete (<code>DESIGN.md</code>), que es lo que tenés que usar en código.</p>',
-         '<div class="note"><b>Los componentes de Figma todavía usan variables viejas</b>En Figma, los componentes de estas pantallas siguen vinculados a variables de la librería anterior (por ejemplo <code>Primitves/brand/700 main</code>). Para código, usá los tokens de esta página.</div>']
-    for s in SCREENS:
-        h.append('<h2 id="pt-%s">%s</h2>' % (s['key'], e(s['title'])))
-        h.append('<p>%s <span class="muted small">Figma: %s.</span></p>' % (e(s['desc']), e(s['seccion'])))
-        spots, items = [], []
-        for n, (t, (x, y, w, hh), toks, marca, nota) in enumerate(s['spots'], 1):
-            st = 'left:%.3f%%;top:%.3f%%;width:%.3f%%;height:%.3f%%' % (x / s['w'] * 100, y / s['h'] * 100, w / s['w'] * 100, hh / s['h'] * 100)
-            big = ' big' if w >= s['w'] * 0.6 else ''
-            spots.append('<button type="button" class="spot%s" data-n="%d" style="%s" aria-label="%s"><span>%d</span></button>' % (big, n, st, e(t), n))
-            chips = ''.join('<span class="tk"><code>%s</code>%s</span>' % (e(k), (' <small>%s</small>' % e(tk_corto(k)) if tk_val(k) else '')) for k in toks)
-            items.append('<li data-n="%d" tabindex="0"><span class="num">%d</span><div><b>%s</b>%s<p>%s</p><div class="tks">%s</div></div></li>' % (n, n, e(t), ' <span class="tag">Sigue la marca</span>' if marca else '', e(nota), chips))
-        h.append('<div class="ptwrap"><div class="ptimg"><img src="pantallas/%s.png" alt="Pantalla %s" width="%d" height="%d" loading="lazy">%s</div><ol class="ptlist">%s</ol></div>' % (s['key'], e(s['title']), s['w'], s['h'], ''.join(spots), ''.join(items)))
-    h.append(' </div>\n</section>\n')
-    return '\n'.join(h)
+    lst = PANT[pid]
+    groups = []
+    for i, s in enumerate(lst):
+        if not groups or groups[-1][0] != s['sec']:
+            groups.append((s['sec'], []))
+        groups[-1][1].append((i, s))
+    opts = ''.join('<optgroup label="%s">%s</optgroup>' % (e(g), ''.join('<option value="%d">%s</option>' % (i, e(s['l'])) for i, s in items)) for g, items in groups)
+    thumbs = ''.join('<button type="button" data-i="%d"><span class="im"><img loading="lazy" src="%s" width="840" height="%d" alt=""></span><span class="cap"><b>%s</b><small>%s</small></span></button>' % (i, s['f'], s['h'], e(s['l']), e(s['sec'])) for i, s in enumerate(lst))
+    n = len(lst)
+    return ('<section class="page" id="pg-%s" data-title="%s" data-g="Tokens en las pantallas" data-desc="%s" hidden>\n <div class="panel" data-tab="resumen" data-label="Resumen">\n'
+            '<p>Las pantallas de desktop del flujo, exportadas de Figma (archivo “FID SDK — Variables”, página Flujo) sin el header, que lo pone el integrador. Elegí una pantalla y pasá el mouse por cada parte para ver qué token la pinta. Los tokens son los del paquete (<code>DESIGN.md</code>), que es lo que tenés que usar en código.</p>\n'
+            '<div class="note"><b>Los componentes de Figma todavía usan variables viejas</b>En Figma, estas pantallas siguen vinculadas a variables de la librería anterior (por ejemplo <code>Primitves/brand/700 main</code>). Para código, usá los tokens que se ven acá.</div>\n'
+            '<h2 id="%s-visor">Pantalla</h2>\n<div class="pviewer" data-p="%s"><div class="pvbar"><div class="ctrl"><label for="%s-sel">Pantalla</label><select id="%s-sel">%s</select></div><div class="pvnav"><button type="button" data-d="-1">Anterior</button><span class="pvcount"></span><button type="button" data-d="1">Siguiente</button></div></div>'
+            '<p class="pvsec small muted"></p><div class="ptwrap"><div class="ptimg"><img alt="" src="%s" width="840" height="%d"></div><ol class="ptlist"></ol></div></div>\n'
+            '<h2 id="%s-todas">Todas las pantallas</h2>\n<div class="pthumbs">%s</div>\n </div>\n</section>\n') % (
+        pid, e(flow), e('%d %s del flujo, exportadas de Figma, con el token que se aplica en cada parte.' % (n, 'pantalla' if n == 1 else 'pantallas')),
+        pid, pid, pid, pid, opts, lst[0]['f'], lst[0]['h'], pid, thumbs)
 
 
-FIG_HTML = pantallas_page()
+FIG_HTML = ''.join(flow_page(pid, flow) for pid, flow in FLOW_PAGES)
 
 
 def section(title_start, until=None):
@@ -195,7 +216,7 @@ repl = {
         'primitive': {k: v['value'] for k, v in tokens['primitive'].items()},
         'size': {k: v['value'] for k, v in tokens['size'].items()},
         'textStyles': text_styles, 'checklist': checklist, 'rules': rules,
-        'shadows': SHADOWS, 'svgs': svgs, 'logo': logo_sm,
+        'svgs': svgs, 'logo': logo_sm, 'pant': PANT,
     }),
     'LOTTIES_JSON': js(lotties),
     'FIGMA_PAGES': FIG_HTML,

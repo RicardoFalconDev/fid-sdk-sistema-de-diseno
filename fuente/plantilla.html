@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FID SDK · Sistema de diseño</title>
-<meta name="description" content="Sistema de diseño del SDK de FID: fundamentos (color, tipografía, espaciado, radios, elevación, íconos, ilustraciones), componentes, personalización, accesibilidad y código.">
+<meta name="description" content="Sistema de diseño del SDK de FID: fundamentos (color, tipografía, espaciado, radios, íconos, ilustraciones), tokens en las pantallas, personalización, accesibilidad y código.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,100..700,0..1,0&display=swap">
 <style>
@@ -202,7 +202,7 @@ td.wrap{white-space:normal}
 .brandpick button i{width:14px;height:14px;border-radius:50%;border:1px solid var(--stroke-default)}
 .brandpick button[aria-pressed=true],.seg button[aria-pressed=true]{background:var(--bg-default);color:var(--text-primary);font-weight:600}
 
-/* Tipografía, espaciado, radios y elevación */
+/* Tipografía, espaciado y radios */
 .typerow td:last-child{width:45%}
 .fontlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0 var(--sp-6)}
 .fontlist div{border-top:1px solid var(--stroke-subtle);padding-top:var(--sp-3)}
@@ -214,12 +214,6 @@ td.wrap{white-space:normal}
 .radbox{display:flex;flex-wrap:wrap;gap:var(--sp-6);margin:var(--sp-4) 0 var(--sp-6)}
 .radbox div{width:112px;font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary)}
 .radbox i{display:block;height:72px;border:2px solid var(--brand-default);background:var(--brand-tint);margin-bottom:var(--sp-2)}
-.shadows{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--sp-6);margin:var(--sp-4) 0 var(--sp-6)}
-.shadows figure{margin:0}
-.shadows .box{height:120px;border-radius:var(--radius-lg);background:var(--bg-default);display:grid;place-items:center;font-size:var(--font-size-14);color:var(--text-secondary)}
-.shadows .area{background:var(--bg-surface);border-radius:var(--radius-lg);padding:var(--sp-8)}
-.shadows figcaption{margin-top:var(--sp-3);font-size:var(--font-size-14)}
-.shadows figcaption code{font-size:12px}
 
 /* Íconos, ilustraciones y Lotties */
 .icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:var(--sp-3);margin:var(--sp-4) 0 var(--sp-6)}
@@ -269,7 +263,7 @@ td.wrap{white-space:normal}
 .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--brand-default);flex:none}
 .check input:checked + span{color:var(--text-tertiary);text-decoration:line-through}
 
-/* ═════ Componentes del SDK (recetas del paquete) ═════ */
+/* ═════ Clases del SDK (las usan las demos) ═════ */
 .sdk-frame{font-family:var(--font-family-default),system-ui,-apple-system,'Segoe UI',sans-serif}
 .sdk-card{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);overflow:hidden;text-align:center}
 .sdk-btn{display:flex;align-items:center;justify-content:center;width:100%;height:48px;padding:0 20px;font:600 16px/24px var(--font-family-default),system-ui,sans-serif;background:var(--button-primary-bg);border:1px solid var(--button-primary-bg);border-radius:var(--radius-button);color:var(--button-primary-text);cursor:default}
@@ -326,13 +320,13 @@ td.wrap{white-space:normal}
 .type-out{width:100%;background:var(--bg-default);border-radius:var(--radius-md);padding:var(--sp-6);overflow-wrap:anywhere;color:var(--text-primary)}
 @media (max-width:980px){.live{grid-template-columns:minmax(0,1fr)}}
 
-/* Componentes de Figma */
+/* Tokens en las pantallas */
 .ptwrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:var(--sp-6);align-items:start;margin:var(--sp-4) 0 var(--sp-8)}
 .ptimg{position:sticky;top:var(--sp-6);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);background:var(--bg-surface)}
 .ptimg img{display:block;width:100%;height:auto;border-radius:var(--radius-lg)}
 .spot{position:absolute;padding:0;margin:0;background:transparent;border:0;border-radius:var(--radius-sm);cursor:pointer;outline:2px solid transparent;outline-offset:1px}
 .spot span{position:absolute;top:-9px;left:-9px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:var(--bg-inverse);color:var(--text-inverse);font:600 11px/18px var(--font-family-default),system-ui,sans-serif;text-align:center}
-.spot.big span{top:8px;left:8px}
+.spot.big span{top:8px;left:auto;right:8px}
 .spot:hover,.spot:focus-visible,.spot.on{outline-color:var(--stroke-primary);background:color-mix(in srgb,var(--stroke-primary) 8%,transparent)}
 .spot.big:hover,.spot.big.on{background:transparent}
 .spot:hover span,.spot.on span{background:var(--stroke-primary)}
@@ -349,6 +343,25 @@ td.wrap{white-space:normal}
 .ptlist .tk{white-space:nowrap}
 .ptlist .tks small{font-size:11px;color:var(--text-tertiary)}
 @media (max-width:1100px){.ptwrap{grid-template-columns:minmax(0,1fr)}.ptimg{position:relative;top:0}}
+.spot.nonum span{display:none}
+.pvbar{display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:flex-end;justify-content:space-between;margin:var(--sp-4) 0 var(--sp-2)}
+.pvbar .ctrl{flex:1 1 320px;min-width:0;margin:0}
+.pvbar select{width:100%}
+.pvnav{display:flex;align-items:center;gap:var(--sp-2)}
+.pvnav button{font:inherit;font-size:var(--font-size-14);line-height:var(--font-line-height-20);padding:6px var(--sp-3);border:1px solid var(--stroke-default);border-radius:var(--radius-md);background:var(--bg-default);color:var(--text-primary);cursor:pointer}
+.pvnav button:hover{background:var(--bg-subtle)}
+.pvcount{font-size:var(--font-size-12);color:var(--text-tertiary);min-width:64px;text-align:center}
+.pvsec{margin:0 0 var(--sp-3)}
+.pthumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0 var(--sp-8)}
+.pthumbs button{font:inherit;text-align:left;padding:0;cursor:pointer;display:flex;flex-direction:column;border:1px solid var(--stroke-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-default);color:inherit}
+.pthumbs button:hover{border-color:var(--stroke-strong)}
+.pthumbs button.on{border-color:var(--text-primary)}
+.pthumbs button:focus-visible{outline:2px solid var(--stroke-primary);outline-offset:2px}
+.pthumbs .im{display:block;height:132px;overflow:hidden;background:var(--bg-surface)}
+.pthumbs .im img{display:block;width:100%;height:auto}
+.pthumbs .cap{display:flex;flex-direction:column;gap:2px;padding:var(--sp-2) var(--sp-3);border-top:1px solid var(--stroke-subtle)}
+.pthumbs .cap b{font-size:var(--font-size-12);line-height:var(--font-line-height-16);font-weight:600;color:var(--text-primary)}
+.pthumbs .cap small{font-size:11px;line-height:14px;color:var(--text-tertiary)}
 /* ═════ Responsive ═════ */
 @media (max-width:1180px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -407,8 +420,8 @@ td.wrap{white-space:normal}
   <h2 id="intro-que">Qué es</h2>
   <p>Es la referencia completa para diseñar e implementar el SDK de FID: los fundamentos visuales, los componentes, la personalización de marca, la accesibilidad y el código. Todo sale de los tokens del archivo de Figma “FID SDK — Variables”; si algo de acá contradice a Figma, gana Figma.</p>
   <div class="cards">
-    <div class="card"><a href="#/color"><h4>Fundamentos</h4><p>Color, tipografía, espaciado, radios y bordes, elevación, íconos, ilustraciones y Lotties.</p></a></div>
-    <div class="card"><a href="#/pantallas"><h4>Componentes</h4><p>Pantallas reales del SDK con el token de cada parte, y las recetas de código del paquete.</p></a></div>
+    <div class="card"><a href="#/color"><h4>Fundamentos</h4><p>Color, tipografía, espaciado, radios y bordes, íconos, ilustraciones y Lotties.</p></a></div>
+    <div class="card"><a href="#/p-firmar"><h4>Tokens en las pantallas</h4><p>Todas las pantallas del SDK, flujo por flujo, con el token de cada parte.</p></a></div>
     <div class="card brand"><a href="#/personalizacion"><h4>Personalización</h4><p>Las cuatro propiedades que define cada cliente y cómo se aplican en el SDK.</p></a></div>
     <div class="card"><a href="#/accesibilidad"><h4>Calidad</h4><p>Accesibilidad, contraste y la lista de verificación antes de entregar.</p></a></div>
   </div>
@@ -726,47 +739,6 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
  </div>
 </section>
 
-<section class="page" id="pg-elevacion" data-title="Elevación" data-g="Fundamentos" data-desc="Cómo se separan las capas: fondo y borde en la interfaz, y los estilos de sombra de Figma." hidden>
- <div class="panel" data-tab="resumen" data-label="Resumen">
-  <h2 id="ele-plana">Una interfaz plana</h2>
-  <p>Las pantallas del SDK separan las capas con el fondo y un borde de 1 px, no con sombras. El fondo de la app es <code>--bg-surface</code>, la tarjeta es <code>--bg-default</code> con borde <code>--stroke-default</code>, y adentro los fondos suaves usan <code>--bg-subtle</code> o <code>--brand-tint</code>.</p>
-  <div class="layers">
-    <div class="tag"><b>Nivel 0 · Fondo de la app</b> · <code>--bg-surface</code></div>
-    <div class="l2"><div class="tag"><b>Nivel 1 · Tarjeta</b> · <code>--bg-default</code> + <code>--stroke-default</code></div>
-      <div class="l3"><span style="background:var(--bg-subtle)">Nivel 2 · <code>--bg-subtle</code></span></div></div>
-  </div>
-  <h2 id="ele-sombras">Estilos de sombra</h2>
-  <p>El archivo de Figma “FID SDK — Variables” tiene tres estilos de efecto. Están en Figma; todavía no son tokens del paquete CSS.</p>
-  <div class="shadows" id="shadowCards"></div>
-  <h3 id="ele-probar">Compará</h3>
-  <div class="live" id="elLive">
-    <div>
-      <div class="ctrl"><span class="lbl2">Separación</span><div class="seg" data-k="e" id="elSeg"></div></div>
-      <p class="live-out" id="elNote"></p>
-    </div>
-    <div><div class="stage live-stage"><div class="el-card" id="elCard"><b>Verificá tu correo</b>Te enviamos un código de 6 dígitos.</div></div></div>
-  </div>
-  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre id="elCss"></pre></div>
-
-  <h2 id="ele-foco">El foco no es una sombra</h2>
-  <p>El aro de foco de los campos usa <code>box-shadow</code>, pero es un indicador, no una elevación: 3 px con <code>--accent-4</code>, sin desenfoque.</p>
-  <div class="stage sdk-frame"><span class="sdk-otp-cell is-focus">2</span></div>
-  <h2 id="ele-capas">Capas superpuestas</h2>
-  <p>Para oscurecer el fondo detrás de una capa (por ejemplo, un modal), usá <code>--overlay-default</code> con opacidad o un paso de la escala <code>black-a</code>.</p>
- </div>
- <div class="panel" data-tab="tokens" data-label="Tokens" hidden>
-  <h2 id="ele-tokens">Estilos de efecto (Figma)</h2>
-  <div class="tablewrap"><table><thead><tr><th>Estilo</th><th>Capas</th><th>Equivalente CSS</th></tr></thead><tbody id="shadowTable"></tbody></table></div>
-  <h2 id="ele-overlay">Overlay y transparencias</h2>
-  <div class="tablewrap"><table><thead><tr><th>Token</th><th>Valor</th><th>Para qué</th></tr></thead><tbody id="overlayTable"></tbody></table></div>
- </div>
- <div class="panel" data-tab="codigo" data-label="Código" hidden>
-  <h2 id="ele-code">Uso en CSS</h2>
-  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre>.sdk-card   { background: var(--bg-default); border: 1px solid var(--stroke-default); }   <span class="tk-c">/* sin sombra */</span>
-.sdk-otp-cell.is-focus { border-color: var(--stroke-primary); box-shadow: 0 0 0 3px var(--accent-4); }</pre></div>
-  <div class="note"><b>Si necesitás una sombra en código</b>Las sombras de Figma todavía no son tokens del paquete. No escribas el valor literal en un componente: pedí que se agregue como token (regla 4).</div>
- </div>
-</section>
 
 <section class="page" id="pg-iconos" data-title="Íconos" data-g="Fundamentos" data-desc="Material Symbols Rounded, peso 300, sin relleno salvo cuando el diseño lo pide." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
@@ -824,105 +796,8 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
 <!-- ════════════════════ COMPONENTES ════════════════════ -->
 
 {{FIGMA_PAGES}}
-<section class="page" id="pg-botones" data-title="Botones" data-g="Recetas de código" data-desc="La receta CSS del paquete para los botones: primario, secundario, terciario, de peligro y deshabilitado." hidden>
- <div class="panel" data-tab="resumen" data-label="Resumen">
-  <h2 id="btn-demo">Demo</h2>
-  <p>Elegí la variante y el estado. La vista y los tokens cambian con la marca, el radio y la fuente de la barra de arriba.</p>
-  <div class="live" id="btnLive">
-    <div>
-      <div class="ctrl"><span class="lbl2">Variante</span><div class="seg" data-k="v"><button data-v="primary" aria-pressed="true">Primario</button><button data-v="secondary" aria-pressed="false">Secundario</button><button data-v="tertiary" aria-pressed="false">Terciario</button><button data-v="danger" aria-pressed="false">Peligro</button></div></div>
-      <div class="ctrl"><span class="lbl2">Estado</span><div class="seg" data-k="s"><button data-v="normal" aria-pressed="true">Normal</button><button data-v="hover" aria-pressed="false">Hover</button><button data-v="disabled" aria-pressed="false">Deshabilitado</button></div></div>
-      <div class="ctrl"><label for="btnLabel">Texto</label><input class="field txt" id="btnLabel" value="Continuar" maxlength="28" autocomplete="off"></div>
-      <label class="toggle"><input type="checkbox" id="btnFull"> Ancho completo</label>
-    </div>
-    <div><div class="stage sdk-frame live-stage" id="btnStage"></div>
-      <div class="tablewrap"><table><thead><tr><th>Parte</th><th>Token</th><th>Valor</th></tr></thead><tbody id="btnTokens"></tbody></table></div></div>
-  </div>
-  <div class="code"><div class="bar"><span>html</span><button type="button" data-copy-pre>Copiar</button></div><pre id="btnHtml"></pre></div>
 
-  <h2 id="btn-var">Variantes</h2>
-  <p>El primario es la acción principal y el único botón que usa la marca. Las demás variantes usan tokens fijos, salvo el terciario, cuyo texto y hover siguen la marca.</p>
-  <div class="demo sdk-frame"><span class="sdk-btn">Primario</span><span class="sdk-btn sdk-btn--secondary">Secundario</span><span class="sdk-btn sdk-btn--tertiary">Terciario</span><span class="sdk-btn sdk-btn--danger">Peligro</span><button class="sdk-btn" disabled>Deshabilitado</button></div>
-  <h2 id="btn-estados">Estados</h2>
-  <div class="states sdk-frame">
-    <figure><div class="stage"><span class="sdk-btn">Continuar</span></div><figcaption><i class="num">1</i><span>Primario: <code>--button-primary-bg</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn force-hover">Continuar</span></div><figcaption><i class="num">2</i><span>Hover: <code>--button-primary-bg-hover</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--secondary">Cancelar</span></div><figcaption><i class="num">1</i><span>Secundario: <code>--button-secondary-bg</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--secondary force-hover">Cancelar</span></div><figcaption><i class="num">2</i><span>Hover: <code>--button-secondary-bg-hover</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--tertiary">Reenviar código</span></div><figcaption><i class="num">1</i><span>Terciario: <code>--button-tertiary-text</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--tertiary force-hover">Reenviar código</span></div><figcaption><i class="num">2</i><span>Hover: <code>--button-tertiary-bg-hover</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--danger">Rechazar</span></div><figcaption><i class="num">1</i><span>Peligro: <code>--button-danger-bg</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-btn sdk-btn--danger force-hover">Rechazar</span></div><figcaption><i class="num">2</i><span>Hover: <code>--button-danger-bg-hover</code></span></figcaption></figure>
-  </div>
-  <h2 id="btn-radio">Radio</h2>
-  <p>Todos los botones usan <code>--radius-button</code>, que define el cliente. Ver <a href="#/radios">Radios y bordes</a>.</p>
- </div>
- <div class="panel" data-tab="especificaciones" data-label="Especificaciones" hidden>
-  <h2 id="btn-specs">Especificaciones</h2>
-  <p>Cada parte de cada variante, por estado, con la propiedad CSS y el token. Los valores siguen la marca elegida en la barra de arriba.</p>
-  <div class="tablewrap"><table><thead><tr><th>Variante</th><th>Estado</th><th>Parte</th><th>Propiedad</th><th>Token</th><th>Valor</th></tr></thead><tbody id="btnSpecs"></tbody></table></div>
- </div>
- <div class="panel" data-tab="tokens" data-label="Tokens" hidden>
-  <h2 id="btn-tokens">Tokens</h2>
-  <div class="tablewrap"><table><thead><tr><th>Token</th><th>Rol</th><th>Valor</th><th></th></tr></thead><tbody id="btnTable"></tbody></table></div>
- </div>
- <div class="panel" data-tab="codigo" data-label="Código" hidden>
-  <h2 id="btn-code">CSS</h2>
-  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre>{{CODE_BTN}}</pre></div>
- </div>
-</section>
 
-<section class="page" id="pg-controles" data-title="Controles" data-g="Recetas de código" data-desc="La receta CSS del paquete para la casilla, el tile de ícono, la celda de código y el spinner." hidden>
- <div class="panel" data-tab="resumen" data-label="Resumen">
-  <h2 id="ctl-demo">Demo</h2>
-  <p>Elegí un control y su estado para ver qué tokens usa.</p>
-  <div class="live" id="ctlLive">
-    <div>
-      <div class="ctrl"><span class="lbl2">Control</span><div class="seg" data-k="c"><button data-v="check" aria-pressed="true">Casilla</button><button data-v="tile" aria-pressed="false">Tile</button><button data-v="otp" aria-pressed="false">Celda</button><button data-v="spin" aria-pressed="false">Spinner</button></div></div>
-      <div class="ctrl" id="ctlOptWrap"><span class="lbl2" id="ctlOptLbl">Estado</span><div class="seg" data-k="o" id="ctlOpt"></div></div>
-    </div>
-    <div><div class="stage sdk-frame live-stage" id="ctlStage"></div>
-      <div class="tablewrap"><table><thead><tr><th>Parte</th><th>Token</th><th>Valor</th></tr></thead><tbody id="ctlTokens"></tbody></table></div></div>
-  </div>
-
-  <h2 id="ctl-casilla">Casilla</h2>
-  <p>Marcada, usa <code>--brand-default</code> de fondo; el tilde hereda <code>--button-primary-text</code>.</p>
-  <div class="stage sdk-frame"><span class="sdk-checkbox"><span class="icon icon--filled" aria-hidden="true">check</span></span><span class="sdk-text">Confirmo que leí los términos y condiciones</span></div>
-  <h2 id="ctl-tile">Tile de ícono</h2>
-  <p>Fondo <code>--brand-tint</code>, borde <code>--stroke-brand-subtle</code> e ícono <code>--brand-default</code>, de 20 px.</p>
-  <div class="stage sdk-frame"><span class="sdk-tile"><span class="icon" aria-hidden="true">pin</span></span><span class="sdk-tile"><span class="icon" aria-hidden="true">ar_on_you</span></span><span class="sdk-tile"><span class="icon" aria-hidden="true">shield_lock</span></span></div>
-  <h2 id="ctl-otp">Celda de código</h2>
-  <div class="states sdk-frame">
-    <figure><div class="stage"><span class="sdk-otp-cell">4</span><span class="sdk-otp-cell"></span></div><figcaption><i class="num">1</i><span>Normal: <code>--stroke-strong</code></span></figcaption></figure>
-    <figure><div class="stage"><span class="sdk-otp-cell">4</span><span class="sdk-otp-cell is-focus">2</span></div><figcaption><i class="num">2</i><span>Foco: <code>--stroke-primary</code> y aro <code>--accent-4</code></span></figcaption></figure>
-  </div>
-  <h2 id="ctl-spin">Spinner</h2>
-  <p>Pista <code>--stroke-default</code> y arco <code>--brand-default</code>. Con <code>prefers-reduced-motion</code> gira más lento.</p>
-  <div class="stage sdk-frame"><span class="sdk-spinner" role="status" aria-label="Cargando"></span></div>
- </div>
- <div class="panel" data-tab="codigo" data-label="Código" hidden>
-  <h2 id="ctl-code">CSS</h2>
-  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre>{{CODE_CTRL}}</pre></div>
- </div>
-</section>
-
-<section class="page" id="pg-contenido" data-title="Link, pie y badge" data-g="Recetas de código" data-desc="La receta CSS del paquete para el link, el pie “Powered by FID” y el badge de error." hidden>
- <div class="panel" data-tab="resumen" data-label="Resumen">
-  <h2 id="cnt-link">Link</h2>
-  <p>Siempre <code>--text-link</code> con subrayado. No cambia con la marca.</p>
-  <div class="stage sdk-frame"><span class="sdk-link">Olvidé mi clave de firma</span></div>
-  <h2 id="cnt-pie">Pie</h2>
-  <p>Fondo <code>--bg-surface</code>, borde superior <code>--stroke-default</code> y el logo de FID, que es fijo.</p>
-  <div class="stage sdk-frame"><div class="sdk-footer" style="width:300px;border-radius:8px" id="footDemo"></div></div>
-  <h2 id="cnt-badge">Badge de error</h2>
-  <p>Usa <code>--feedback-error-text</code>, <code>-bg</code> y <code>-border</code>, siempre con texto y un ícono.</p>
-  <div class="stage sdk-frame"><span class="badge-error"><span class="icon icon--filled" aria-hidden="true" style="font-size:16px">error</span> Código incorrecto</span></div>
- </div>
- <div class="panel" data-tab="codigo" data-label="Código" hidden>
-  <h2 id="cnt-code">CSS</h2>
-  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre>{{CODE_MISC}}</pre></div>
- </div>
-</section>
 
 <!-- ════════════════════ CALIDAD ════════════════════ -->
 
@@ -1146,12 +1021,6 @@ BUILD.radios = function () {
   $('#strokeTable').innerHTML = DATA.semantic.filter(function (t) { return groupOf(t.name) === 'stroke'; }).map(function (t) { return swRow(t, t.value); }).join('');
   $('#radTable').innerHTML = r.concat(['--radius-button', '--border-width-default']).map(function (k) { return '<tr><td><code>' + k + '</code></td><td>' + copyBtn(DATA.size[k]) + '</td><td>' + (k === '--radius-button' ? 'Configurable (radius)' : k === '--border-width-default' ? 'Ancho de todos los bordes' : '') + '</td></tr>'; }).join('');
 };
-BUILD.elevacion = function () {
-  $('#shadowCards').innerHTML = DATA.shadows.map(function (s) { return '<figure><div class="area"><div class="box" style="box-shadow:' + s.css + '">' + s.name + '</div></div><figcaption><code>' + s.name + '</code> · ' + s.layers + (s.layers > 1 ? ' capas' : ' capa') + '</figcaption></figure>'; }).join('');
-  $('#shadowTable').innerHTML = DATA.shadows.map(function (s) { return '<tr><td><code>' + s.name + '</code></td><td>' + s.layers + '</td><td class="wrap">' + copyBtn(s.css) + '</td></tr>'; }).join('');
-  var ov = [['--overlay-default', DATA.semantic.filter(function (t) { return t.name === '--overlay-default'; })[0].value, 'Base para oscurecer: usar con opacidad']].concat(['4', '8', '9', '10'].map(function (n) { return ['--black-a-' + n, DATA.primitive['--black-a-' + n], 'Primitivo con transparencia']; }));
-  $('#overlayTable').innerHTML = ov.map(function (o) { return '<tr><td><code>' + o[0] + '</code></td><td>' + copyBtn(o[1]) + '</td><td>' + o[2] + '</td></tr>'; }).join('');
-};
 BUILD.iconos = function () {
   $('#iconGrid').innerHTML = ['info', 'error', 'check_circle', 'warning', 'close', 'check', 'add', 'delete', 'sync', 'download', 'visibility', 'lock', 'pin', 'ar_on_you', 'shield_lock', 'mail', 'schedule', 'help', 'person_add', 'history'].map(function (n) { return '<button type="button" class="ib" data-copy="' + n + '" title="Copiar ' + n + '"><span class="icon" aria-hidden="true">' + n + '</span>' + n + '</button>'; }).join('');
   $('#fillToggle').addEventListener('change', function () { var on = this.checked; $$('#iconGrid .icon').forEach(function (i) { i.classList.toggle('icon--filled', on); }); });
@@ -1168,10 +1037,6 @@ BUILD.ilustraciones = function () {
     if (a[2]) { anim.addEventListener('DOMLoaded', function () { tintLottie(holder); }); anim.addEventListener('enterFrame', function () { tintLottie(holder); }); }
   });
 };
-BUILD.botones = function () {
-  $('#btnTable').innerHTML = DATA.semantic.filter(function (t) { return groupOf(t.name) === 'button'; }).map(function (t) { return '<tr><td><span class="sw" style="background:' + t.value + '"></span><code>' + t.name + '</code></td><td class="wrap">' + esc(t.uso) + '</td><td>' + copyBtn(t.value) + '</td><td>' + (t.brand ? '<span class="badge">Marca</span>' : '<span class="badge fix">Fijo</span>') + '</td></tr>'; }).join('');
-};
-BUILD.contenido = function () { $('#footDemo').innerHTML = 'POWERED BY ' + DATA.logo; };
 var A11Y = [['--button-primary-text', '--button-primary-bg'], ['--text-primary', '--bg-default'], ['--text-secondary', '--bg-default'], ['--text-tertiary', '--bg-default'], ['--text-link', '--bg-default'], ['--feedback-error-text', '--feedback-error-bg'], ['--text-placeholder', '--bg-default'], ['--accent-8', '--bg-default']];
 BUILD.accesibilidad = function () {
   var b = BRANDS[0];
@@ -1214,8 +1079,6 @@ function applyDemo() {
   $('#dmBrand').value = demo.brand; $('#dmRadius').value = demo.radius; $('#dmFont').value = demo.font; $('#dmDot').style.background = b.primary;
   try { localStorage.setItem('fidsdk-ds-demo', JSON.stringify(demo)); } catch (e) {}
   if (built.color) { brandSel = demo.brand; $$('#brandPick button').forEach(function (x) { x.setAttribute('aria-pressed', +x.dataset.i === brandSel); }); renderTokens(); }
-  if (built.botones) { renderBtnLive(); renderBtnSpecs(); }
-  if (built.controles) renderCtlLive();
 }
 function initDemoBar() {
   $('#dmBrand').innerHTML = BRANDS.map(function (b, i) { return '<option value="' + i + '">' + b.n + '</option>'; }).join('');
@@ -1224,60 +1087,6 @@ function initDemoBar() {
   $('#dmBrand').addEventListener('change', function () { demo.brand = +this.value; applyDemo(); });
   $('#dmRadius').addEventListener('change', function () { demo.radius = this.value; applyDemo(); });
   $('#dmFont').addEventListener('change', function () { demo.font = this.value; applyDemo(); });
-}
-
-/* Botones */
-var BTN = {
-  primary: { n: 'Primario', cls: '', normal: [['Fondo', '--button-primary-bg', 'background'], ['Borde', '--button-primary-bg', 'border-color'], ['Texto', '--button-primary-text', 'color']], hover: [['Fondo', '--button-primary-bg-hover', 'background'], ['Texto', '--button-primary-text', 'color']] },
-  secondary: { n: 'Secundario', cls: 'sdk-btn--secondary', normal: [['Fondo', '--button-secondary-bg', 'background'], ['Borde', '--button-secondary-border', 'border-color'], ['Texto', '--button-secondary-text', 'color']], hover: [['Fondo', '--button-secondary-bg-hover', 'background'], ['Borde', '--button-secondary-border', 'border-color'], ['Texto', '--button-secondary-text', 'color']] },
-  tertiary: { n: 'Terciario', cls: 'sdk-btn--tertiary', normal: [['Texto', '--button-tertiary-text', 'color']], hover: [['Fondo', '--button-tertiary-bg-hover', 'background'], ['Texto', '--button-tertiary-text', 'color']] },
-  danger: { n: 'Peligro', cls: 'sdk-btn--danger', normal: [['Fondo', '--button-danger-bg', 'background'], ['Texto', '--button-danger-text', 'color']], hover: [['Fondo', '--button-danger-bg-hover', 'background'], ['Texto', '--button-danger-text', 'color']] }
-};
-var BTN_DIS = [['Fondo', '--button-disabled-bg', 'background'], ['Borde', '--button-disabled-border', 'border-color'], ['Texto', '--button-disabled-text', 'color']];
-var ST_ES = { normal: 'Normal', hover: 'Hover', disabled: 'Deshabilitado' };
-var btnSt = { v: 'primary', s: 'normal' };
-function btnParts(v, s) { return (s === 'disabled' ? BTN_DIS : BTN[v][s]).concat([['Radio', '--radius-button', 'border-radius']]); }
-function renderBtnLive() {
-  var d = BTN[btnSt.v], label = $('#btnLabel').value || 'Continuar', full = $('#btnFull').checked, w = full ? 'width:100%' : 'width:auto;min-width:180px';
-  var cls = 'sdk-btn' + (d.cls ? ' ' + d.cls : '');
-  $('#btnStage').innerHTML = btnSt.s === 'disabled' ? '<button class="' + cls + '" style="' + w + '" disabled>' + esc(label) + '</button>' : '<span class="' + cls + (btnSt.s === 'hover' ? ' force-hover' : '') + '" style="' + w + '">' + esc(label) + '</span>';
-  $('#btnTokens').innerHTML = btnParts(btnSt.v, btnSt.s).map(function (p) { return tokRow(p[0], p[1]); }).join('');
-  $('#btnHtml').textContent = '<button class="' + cls + '"' + (btnSt.s === 'disabled' ? ' disabled' : '') + '>' + label + '</button>';
-}
-function renderBtnSpecs() {
-  var rows = [];
-  Object.keys(BTN).forEach(function (v) { ['normal', 'hover', 'disabled'].forEach(function (s) { btnParts(v, s).forEach(function (p, i) { var val = valOf(p[1]), c = /^#|^rgba?\(/.test(val); rows.push('<tr><td>' + (i === 0 ? '<b>' + BTN[v].n + '</b>' : '') + '</td><td>' + (i === 0 ? ST_ES[s] : '') + '</td><td>' + p[0] + '</td><td><code>' + p[2] + '</code></td><td><code>' + p[1] + '</code></td><td>' + (c ? '<span class="sw" style="background:' + val + '"></span>' : '') + copyBtn(val) + '</td></tr>'); }); }); });
-  $('#btnSpecs').innerHTML = rows.join('');
-}
-function initBtnLive() {
-  segInit($('#btnLive'), btnSt, renderBtnLive);
-  $('#btnLabel').addEventListener('input', renderBtnLive); $('#btnFull').addEventListener('change', renderBtnLive);
-  renderBtnLive(); renderBtnSpecs();
-}
-
-/* Controles */
-var ctlSt = { c: 'check', o: '' };
-var CTL = {
-  check: { lbl: '', opts: [], parts: function () { return [['Fondo', '--brand-default'], ['Tilde', '--button-primary-text']]; }, html: function () { return '<span class="sdk-checkbox"><span class="icon icon--filled" aria-hidden="true">check</span></span><span class="sdk-text">Confirmo que leí los términos y condiciones</span>'; } },
-  tile: { lbl: 'Ícono', opts: [['pin', 'Código'], ['ar_on_you', 'Rostro'], ['shield_lock', 'Clave']], parts: function () { return [['Fondo', '--brand-tint'], ['Borde', '--stroke-brand-subtle'], ['Ícono', '--brand-default']]; }, html: function (o) { return '<span class="sdk-tile"><span class="icon" aria-hidden="true">' + (o || 'pin') + '</span></span>'; } },
-  otp: { lbl: 'Estado', opts: [['normal', 'Normal'], ['focus', 'Foco']], parts: function (o) { return o === 'focus' ? [['Borde', '--stroke-primary'], ['Aro de foco (3 px)', '--accent-4'], ['Fondo', '--bg-default'], ['Texto', '--text-primary']] : [['Borde', '--stroke-strong'], ['Fondo', '--bg-default'], ['Texto', '--text-primary']]; }, html: function (o) { return '<span class="sdk-otp-cell">4</span><span class="sdk-otp-cell' + (o === 'focus' ? ' is-focus' : '') + '">2</span>'; } },
-  spin: { lbl: '', opts: [], parts: function () { return [['Pista', '--stroke-default'], ['Arco', '--brand-default']]; }, html: function () { return '<span class="sdk-spinner" role="status" aria-label="Cargando"></span>'; } }
-};
-function renderCtlOpts() {
-  var d = CTL[ctlSt.c];
-  $('#ctlOptWrap').hidden = !d.opts.length; $('#ctlOptLbl').textContent = d.lbl;
-  ctlSt.o = d.opts.length ? d.opts[0][0] : '';
-  $('#ctlOpt').innerHTML = d.opts.map(function (o, i) { return '<button data-v="' + o[0] + '" aria-pressed="' + (i === 0) + '">' + o[1] + '</button>'; }).join('');
-}
-function renderCtlLive() {
-  var d = CTL[ctlSt.c];
-  $('#ctlStage').innerHTML = d.html(ctlSt.o);
-  $('#ctlTokens').innerHTML = d.parts(ctlSt.o).map(function (p) { return tokRow(p[0], p[1]); }).join('');
-}
-function initCtlLive() {
-  $('[data-k="c"]', $('#ctlLive')).addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctlSt.c = b.dataset.v; $$('button', this).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderCtlOpts(); renderCtlLive(); applyDemo(); });
-  $('#ctlOpt').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctlSt.o = b.dataset.v; $$('button', this).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderCtlLive(); });
-  renderCtlOpts(); renderCtlLive();
 }
 
 /* Tipografía */
@@ -1327,36 +1136,45 @@ function renderRad() {
 }
 function initRadLive() { segInit($('#radLive'), radSt, renderRad); $('#radRange').addEventListener('input', renderRad); renderRad(); }
 
-/* Elevación */
-var elSt = { e: 'border' };
-function renderEl() {
-  var c = $('#elCard'), s = DATA.shadows.filter(function (x) { return x.name === elSt.e; })[0];
-  if (!s) { c.style.border = '1px solid var(--stroke-default)'; c.style.boxShadow = 'none'; $('#elNote').textContent = 'Así separa capas el SDK: fondo blanco y borde de 1 px, sin sombra.'; $('#elCss').textContent = '.sdk-card {\n  background: var(--bg-default);\n  border: 1px solid var(--stroke-default);\n}'; return; }
-  c.style.border = '0'; c.style.boxShadow = s.css;
-  $('#elNote').textContent = 'Estilo de efecto de Figma (' + s.layers + (s.layers > 1 ? ' capas' : ' capa') + '). Todavía no es un token del paquete.';
-  $('#elCss').textContent = '/* ' + s.name + ' (Figma) */\nbox-shadow: ' + s.css + ';';
-}
-function initElLive() {
-  $('#elSeg').innerHTML = '<button data-v="border" aria-pressed="true">Borde</button>' + DATA.shadows.map(function (s) { return '<button data-v="' + s.name + '" aria-pressed="false">' + s.name.replace('shadow/', '') + '</button>'; }).join('');
-  segInit($('#elLive'), elSt, renderEl); renderEl();
-}
-var INIT = { botones: initBtnLive, controles: initCtlLive, tipografia: initTypeLive, espaciado: initSpLive, radios: initRadLive, elevacion: initElLive };
+var INIT = { tipografia: initTypeLive, espaciado: initSpLive, radios: initRadLive };
 
 
-/* ═════ Tokens en las pantallas: parte ↔ lista ═════ */
+/* ═════ Tokens en las pantallas: visor ═════ */
 function initPantallas(root) {
-  $$('.ptwrap', root).forEach(function (w) {
-    function on(n) { $$('[data-n]', w).forEach(function (x) { x.classList.toggle('on', x.dataset.n === n); }); }
-    $$('[data-n]', w).forEach(function (x) {
+  var v = $('.pviewer', root);
+  if (!v) return;
+  var L = DATA.pant[v.dataset.p], sel = $('select', v), img = $('.ptimg img', v), box = $('.ptimg', v), list = $('.ptlist', v), cur = 0;
+  function on(n) { $$('[data-n]', v).forEach(function (x) { x.classList.toggle('on', x.dataset.n === n); }); }
+  function render(i) {
+    cur = (i + L.length) % L.length;
+    var s = L[cur], spots = '', items = '';
+    sel.value = String(cur); img.src = s.f; img.height = s.h; img.alt = 'Pantalla: ' + s.l;
+    $('.pvcount', v).textContent = (cur + 1) + ' de ' + L.length;
+    $('.pvsec', v).textContent = 'Figma: ' + s.sec;
+    s.spots.forEach(function (p) {
+      p.r.forEach(function (r, j) {
+        spots += '<button type="button" class="spot' + (p.big ? ' big' : '') + (j ? ' nonum' : '') + '" data-n="' + p.n + '" style="left:' + r[0] + '%;top:' + r[1] + '%;width:' + r[2] + '%;height:' + r[3] + '%" aria-label="' + esc(p.l) + '"><span>' + p.n + '</span></button>';
+      });
+      items += '<li data-n="' + p.n + '" tabindex="0"><span class="num">' + p.n + '</span><div><b>' + esc(p.l) + '</b>' + (p.m ? ' <span class="tag">Sigue la marca</span>' : '') + '<p>' + esc(p.d) + '</p><div class="tks">' + p.t.map(function (t) { return '<span class="tk"><code>' + esc(t[0]) + '</code>' + (t[1] ? ' <small>' + esc(t[1]) + '</small>' : '') + '</span>'; }).join('') + '</div></div></li>';
+    });
+    $$('.spot', box).forEach(function (x) { x.remove(); });
+    box.insertAdjacentHTML('beforeend', spots);
+    list.innerHTML = items;
+    $$('[data-n]', v).forEach(function (x) {
       x.addEventListener('mouseenter', function () { on(x.dataset.n); });
       x.addEventListener('focus', function () { on(x.dataset.n); });
       x.addEventListener('mouseleave', function () { on(null); });
       x.addEventListener('blur', function () { on(null); });
     });
-    $$('.spot', w).forEach(function (sp) {
-      sp.addEventListener('click', function () { var li = $('li[data-n="' + sp.dataset.n + '"]', w); li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); on(sp.dataset.n); });
+    $$('.spot', box).forEach(function (sp) {
+      sp.addEventListener('click', function () { var li = $('li[data-n="' + sp.dataset.n + '"]', list); li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); on(sp.dataset.n); });
     });
-  });
+    $$('.pthumbs button', root).forEach(function (b) { var a = +b.dataset.i === cur; b.classList.toggle('on', a); b.setAttribute('aria-pressed', a ? 'true' : 'false'); });
+  }
+  sel.addEventListener('change', function () { render(+sel.value); });
+  $$('.pvnav button', v).forEach(function (b) { b.addEventListener('click', function () { render(cur + (+b.dataset.d)); }); });
+  $$('.pthumbs button', root).forEach(function (b) { b.addEventListener('click', function () { render(+b.dataset.i); v.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+  render(0);
 }
 /* ═════ Navegación: páginas, pestañas e índice ═════ */
 var PAGES = $$('.page').map(function (p) { return { id: p.id.slice(3), title: p.dataset.title, g: p.dataset.g, desc: p.dataset.desc, el: p }; });
@@ -1372,7 +1190,7 @@ function show() {
   $('#pgTabs').innerHTML = panels.length < 2 ? '' : panels.map(function (x) { return '<a href="#/' + P.id + '/' + x.dataset.tab + '"' + (x.dataset.tab === tab ? ' aria-current="page"' : '') + '>' + x.dataset.label + '</a>'; }).join('');
   $$('#nav a').forEach(function (a) { a.classList.toggle('on', a.dataset.id === P.id); });
   $('#jump').value = P.id;
-  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); if (P.id === 'pantallas') initPantallas(P.el); }
+  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); if ($('.pviewer', P.el)) initPantallas(P.el); }
   var hasDemo = !!$$('.sdk-frame', P.el).filter(function (f) { return !f.closest('[data-fixed]'); }).length;
   $('#tabsbar').classList.toggle('solo', panels.length < 2); $('#tabsbar').classList.toggle('nodemo', !hasDemo); $('#tabsbar').classList.toggle('empty', panels.length < 2 && !hasDemo);
   applyDemo();
