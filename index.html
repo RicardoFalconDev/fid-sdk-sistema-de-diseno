@@ -309,11 +309,14 @@ main{min-width:0}
 .pagehead h1{font-size:var(--font-size-32);line-height:var(--font-line-height-44);font-weight:700;letter-spacing:-.01em}
 .pagehead p{color:var(--text-secondary);font-size:var(--font-size-18);line-height:var(--font-line-height-26);margin:var(--sp-2) 0 0;max-width:64ch}
 .tabsbar{position:sticky;top:0;z-index:15;background:var(--bg-default);border-bottom:1px solid var(--stroke-default);margin-top:var(--sp-8)}
-.tabsbar nav{max-width:1160px;margin:0 auto;padding:0 var(--sp-10);display:flex;gap:var(--sp-6);overflow-x:auto}
+.tabsin{max-width:1160px;margin:0 auto;padding:0 var(--sp-10);display:flex;align-items:center;gap:var(--sp-6)}
+.tabsbar nav{display:flex;gap:var(--sp-6);overflow-x:auto;min-width:0}
 .tabsbar a{display:block;padding:var(--sp-3) 0;margin-bottom:-1px;border-bottom:2px solid transparent;color:var(--text-secondary);text-decoration:none;font-weight:500;white-space:nowrap}
 .tabsbar a:hover{color:var(--text-primary)}
 .tabsbar a[aria-current=page]{color:var(--text-primary);font-weight:600;border-bottom-color:var(--brand-default)}
-.tabsbar.solo{height:0;border-bottom-color:var(--stroke-subtle)}
+.tabsbar.nodemo .demobar{display:none}
+.tabsbar.empty{border-bottom-color:var(--stroke-subtle)}
+.tabsbar.empty .tabsin{display:none}
 .tabsbar.solo nav{display:none}
 .layout{max-width:1160px;margin:0 auto;padding:var(--sp-12) var(--sp-10) var(--sp-24);display:grid;grid-template-columns:minmax(0,1fr) 192px;gap:var(--sp-12)}
 .page[hidden],.panel[hidden]{display:none}
@@ -543,6 +546,29 @@ td.wrap{white-space:normal}
 .sdk-terms u{font-weight:700;color:var(--text-primary)}
 .sdk-text{font-size:14px;line-height:20px;max-width:260px;text-align:left}
 
+
+/* Barra de vista de los ejemplos (como el selector de tema de Carbon) */
+.demobar{margin-left:auto;display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-2) 0;font-size:var(--font-size-12);color:var(--text-tertiary);white-space:nowrap}
+.demobar select{height:32px;border:1px solid var(--stroke-strong);border-radius:var(--radius-md);padding:0 var(--sp-2);font:500 13px 'Inter',sans-serif;background:var(--bg-default);color:var(--text-primary)}
+.demobar i{width:12px;height:12px;border-radius:50%;border:1px solid var(--stroke-default);flex:none}
+/* Demos interactivas */
+.live{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:var(--sp-8);align-items:start;margin:var(--sp-4) 0 var(--sp-4);padding:var(--sp-6);border:1px solid var(--stroke-default);border-radius:var(--radius-lg)}
+.live .ctrl{margin-bottom:var(--sp-4)}
+.live .seg button{flex:1 1 auto}
+.live-stage{min-height:160px;margin-bottom:var(--sp-4)}
+.live .tablewrap{margin:0}
+.live-out{font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.field.txt{text-transform:none;font:500 15px 'Inter',sans-serif}
+.range{display:flex;align-items:center;gap:var(--sp-3)}
+.range input{flex:1;accent-color:var(--brand-default)}
+.range output{font:500 13px 'JetBrains Mono',monospace;min-width:44px;text-align:right}
+.sp-card{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);width:100%;max-width:340px;text-align:left}
+.sp-card.show{background:var(--brand-surface);border-color:var(--stroke-brand-subtle)}
+.sp-card.show .sdk-list li{background:var(--bg-default);outline:1px dashed var(--stroke-brand-subtle)}
+.el-card{width:100%;max-width:300px;background:var(--bg-default);border-radius:var(--radius-lg);padding:var(--sp-6);text-align:left;font-size:var(--font-size-14);line-height:var(--font-line-height-20);color:var(--text-secondary)}
+.el-card b{display:block;color:var(--text-primary);font-size:var(--font-size-16);margin-bottom:var(--sp-1)}
+.type-out{width:100%;background:var(--bg-default);border-radius:var(--radius-md);padding:var(--sp-6);overflow-wrap:anywhere;color:var(--text-primary)}
+@media (max-width:980px){.live{grid-template-columns:minmax(0,1fr)}}
 /* ═════ Responsive ═════ */
 @media (max-width:1180px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -562,7 +588,8 @@ td.wrap{white-space:normal}
 @media (max-width:760px){
   .pagehead,.layout{padding-left:var(--sp-4);padding-right:var(--sp-4)}
   .pagehead{padding-top:var(--sp-8)}
-  .tabsbar nav{padding:0 var(--sp-4)}
+  .tabsin{padding:0 var(--sp-4);flex-wrap:wrap;gap:0 var(--sp-6)}
+  .demobar{margin-left:0;width:100%;overflow-x:auto;padding-bottom:var(--sp-2)}
   .dodont,.states,.pair,.levels{grid-template-columns:minmax(0,1fr)}
   .prow{grid-template-columns:1fr;gap:var(--sp-2)}
   .pcells{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:var(--sp-3)}
@@ -627,7 +654,7 @@ td.wrap{white-space:normal}
 
 <main>
   <div class="pagehead"><div class="crumb" id="pgCrumb"></div><h1 id="pgTitle"></h1><p id="pgDesc"></p></div>
-  <div class="tabsbar" id="tabsbar"><nav id="pgTabs" aria-label="Pestañas de la página"></nav></div>
+  <div class="tabsbar" id="tabsbar"><div class="tabsin"><nav id="pgTabs" aria-label="Pestañas de la página"></nav><div class="demobar" role="group" aria-label="Cómo se ven los ejemplos"><span>Ver ejemplos con</span><i id="dmDot" aria-hidden="true"></i><select id="dmBrand" aria-label="Marca"></select><select id="dmRadius" aria-label="Radio de los botones"></select><select id="dmFont" aria-label="Tipografía"></select></div></div></div>
   <div class="layout">
   <div id="pages">
 
@@ -686,7 +713,7 @@ td.wrap{white-space:normal}
       <div class="ctrl"><span class="lbl2">Redondeado <span class="muted">(radius)</span></span><div class="seg" id="segRadius" role="group" aria-label="Redondeado"><button data-r="xs" aria-pressed="false">XS<small>4</small></button><button data-r="s" aria-pressed="false">S<small>8</small></button><button data-r="m" aria-pressed="false">M<small>16</small></button><button data-r="full" aria-pressed="true">Full<small>999</small></button></div></div>
       <div class="ctrl" style="margin-bottom:0"><label for="selFont">Tipografía <span class="muted">(font)</span></label><select id="selFont"></select></div>
     </div>
-    <div><div class="stage"><div class="phone" id="labPhone"></div></div><div id="labNotice"></div></div>
+    <div><div class="stage"><div class="phone" id="labPhone" data-fixed></div></div><div id="labNotice"></div></div>
   </div>
   <div class="code"><div class="bar"><span>Lo que escribe el SDK en .sdk-frame</span><button type="button" data-copy-pre>Copiar</button></div><pre id="labCss"></pre></div>
 
@@ -733,7 +760,7 @@ function applyBranding(frame, cfg) {
  <div class="panel" data-tab="resumen" data-label="Resumen">
   <h2 id="col-intro">Introducción</h2>
   <p>El color del SDK tiene dos partes. Una es la identidad de FID, igual en todas las integraciones: los grises, los estados y la estructura de cada pantalla. La otra es un único color de marca que define cada cliente y que el SDK aplica en las acciones y en los acentos.</p>
-  <div class="brands" id="brandsIntro"></div>
+  <div class="brands" id="brandsIntro" data-fixed></div>
   <h2 id="col-anat">Anatomía del color</h2>
   <p>Los neutros llevan la mayor parte de la pantalla: texto, fondos y bordes. El color de marca aparece solo donde hay acción o un acento. Los colores de estado son fijos y nunca toman la marca.</p>
   <p class="small muted">Pasá el mouse por cada punto de la lista para ver dónde está en la pantalla.</p>
@@ -852,6 +879,19 @@ function applyBranding(frame, cfg) {
   <p>El SDK usa una sola familia para todos los textos. Por defecto es Inter; el cliente puede elegir otra de una lista de ocho con la propiedad <code>font</code>, que se escribe en <code>--font-family-default</code>. Siempre queda <code>system-ui</code> de respaldo.</p>
   <div class="fontlist" id="fontList"></div>
   <div class="note"><b>Pesos que faltan</b>Roboto y Lato no tienen 600: usá 700. Open Sans y Lato no tienen 500: usá 400.</div>
+  <h2 id="tip-probar">Probá un estilo</h2>
+  <p>Elegí un estilo de texto y una fuente, y escribí tu propio texto.</p>
+  <div class="live" id="typeLive">
+    <div>
+      <div class="ctrl"><label for="typeStyle">Estilo</label><select id="typeStyle"></select></div>
+      <div class="ctrl"><label for="typeFont">Fuente</label><select id="typeFont"></select></div>
+      <div class="ctrl"><label for="typeText">Texto</label><input class="field txt" id="typeText" value="Creá tu firma digital" maxlength="80" autocomplete="off"></div>
+    </div>
+    <div><div class="stage live-stage"><div class="type-out" id="typeOut"></div></div>
+      <div class="tablewrap"><table><thead><tr><th>Propiedad</th><th>Token</th><th>Valor</th></tr></thead><tbody id="typeSpecs"></tbody></table></div></div>
+  </div>
+  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre id="typeCss"></pre></div>
+
   <h2 id="tip-escala">Escala de estilos</h2>
   <p>Hay 21 estilos de texto, de mayor a menor. Se aplica el estilo completo (tamaño, interlineado y peso), no valores sueltos. Las variantes <code>-underline</code> son para links; <code>xs-*</code> y <code>xxs-*</code> llevan <code>letter-spacing: 0.1px</code>.</p>
   <div class="tablewrap"><table><thead><tr><th>Estilo</th><th>Tamaño / interlineado</th><th>Peso</th><th>Muestra</th></tr></thead><tbody id="typeTable"></tbody></table></div>
@@ -900,6 +940,19 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
   <h2 id="esp-escala">Escala</h2>
   <p>Todos los espacios son múltiplos de 4. Usá siempre un valor de la escala: nunca un número suelto.</p>
   <div class="bars" id="spaceBars"></div>
+  <h2 id="esp-probar">Probá el espaciado</h2>
+  <p>Cambiá los espacios de una tarjeta del SDK. Con “Mostrar espacios”, el relleno se ve tintado y cada ítem, recuadrado.</p>
+  <div class="live" id="spLive">
+    <div>
+      <div class="ctrl"><label for="spPad">Relleno de la tarjeta</label><select id="spPad"></select></div>
+      <div class="ctrl"><label for="spGap">Separación entre pasos</label><select id="spGap"></select></div>
+      <div class="ctrl"><label for="spIcon">Ícono y texto</label><select id="spIcon"></select></div>
+      <label class="toggle"><input type="checkbox" id="spShow" checked> Mostrar espacios</label>
+    </div>
+    <div><div class="stage sdk-frame live-stage" id="spStage"></div></div>
+  </div>
+  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre id="spCss"></pre></div>
+
   <h2 id="esp-uso">Cómo usarla</h2>
   <p>La distancia entre elementos dice qué está relacionado. Lo que va junto queda más cerca que lo que está separado.</p>
   <div class="tablewrap"><table><thead><tr><th>Relación</th><th>Espacios</th><th>Ejemplo</th></tr></thead><tbody>
@@ -937,6 +990,16 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
   <h2 id="rad-boton">Radio de los botones</h2>
   <p>El cliente elige entre XS 4, S 8, M 16 y Full 999, o cualquier valor desde 0 px con <code>radius: "custom"</code>. Por defecto es Full.</p>
   <div class="stage sdk-frame" id="radBtns"></div>
+  <h3 id="rad-probar">Probá el radio</h3>
+  <div class="live" id="radLive">
+    <div>
+      <div class="ctrl"><span class="lbl2">Radio de los botones</span><div class="seg" data-k="r"><button data-v="xs" aria-pressed="false">XS</button><button data-v="s" aria-pressed="false">S</button><button data-v="m" aria-pressed="false">M</button><button data-v="full" aria-pressed="true">Full</button><button data-v="custom" aria-pressed="false">Otro</button></div></div>
+      <div class="ctrl" id="radCustomWrap" hidden><label for="radRange">Valor personalizado</label><div class="range"><input type="range" id="radRange" min="0" max="40" value="12"><output id="radVal">12 px</output></div></div>
+    </div>
+    <div><div class="stage sdk-frame live-stage"><div id="radWrap" style="display:flex;flex-wrap:wrap;gap:var(--sp-4);justify-content:center;width:100%"><span class="sdk-btn" style="width:auto;min-width:160px">Continuar</span><span class="sdk-btn sdk-btn--secondary" style="width:auto;min-width:160px">Cancelar</span></div></div></div>
+  </div>
+  <div class="code"><div class="bar"><span>config.json</span><button type="button" data-copy-pre>Copiar</button></div><pre id="radCfg"></pre></div>
+
   <h2 id="rad-bordes">Bordes</h2>
   <p>Todos los bordes miden 1 px (<code>--border-width-default</code>). El color sale de los tokens <code>--stroke-*</code>.</p>
   <div class="tablewrap"><table><thead><tr><th>Token</th><th>Valor</th><th>Dónde se usa</th></tr></thead><tbody id="strokeTable"></tbody></table></div>
@@ -964,6 +1027,16 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
   <h2 id="ele-sombras">Estilos de sombra</h2>
   <p>El archivo de Figma “FID SDK — Variables” tiene tres estilos de efecto. Están en Figma; todavía no son tokens del paquete CSS.</p>
   <div class="shadows" id="shadowCards"></div>
+  <h3 id="ele-probar">Compará</h3>
+  <div class="live" id="elLive">
+    <div>
+      <div class="ctrl"><span class="lbl2">Separación</span><div class="seg" data-k="e" id="elSeg"></div></div>
+      <p class="live-out" id="elNote"></p>
+    </div>
+    <div><div class="stage live-stage"><div class="el-card" id="elCard"><b>Verificá tu correo</b>Te enviamos un código de 6 dígitos.</div></div></div>
+  </div>
+  <div class="code"><div class="bar"><span>css</span><button type="button" data-copy-pre>Copiar</button></div><pre id="elCss"></pre></div>
+
   <h2 id="ele-foco">El foco no es una sombra</h2>
   <p>El aro de foco de los campos usa <code>box-shadow</code>, pero es un indicador, no una elevación: 3 px con <code>--accent-4</code>, sin desenfoque.</p>
   <div class="stage sdk-frame"><span class="sdk-otp-cell is-focus">2</span></div>
@@ -1072,6 +1145,20 @@ function tintLottie(holder) {
 
 <section class="page" id="pg-botones" data-title="Botones" data-g="Componentes" data-desc="Primario, secundario, terciario, de peligro y deshabilitado." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
+  <h2 id="btn-demo">Demo</h2>
+  <p>Elegí la variante y el estado. La vista y los tokens cambian con la marca, el radio y la fuente de la barra de arriba.</p>
+  <div class="live" id="btnLive">
+    <div>
+      <div class="ctrl"><span class="lbl2">Variante</span><div class="seg" data-k="v"><button data-v="primary" aria-pressed="true">Primario</button><button data-v="secondary" aria-pressed="false">Secundario</button><button data-v="tertiary" aria-pressed="false">Terciario</button><button data-v="danger" aria-pressed="false">Peligro</button></div></div>
+      <div class="ctrl"><span class="lbl2">Estado</span><div class="seg" data-k="s"><button data-v="normal" aria-pressed="true">Normal</button><button data-v="hover" aria-pressed="false">Hover</button><button data-v="disabled" aria-pressed="false">Deshabilitado</button></div></div>
+      <div class="ctrl"><label for="btnLabel">Texto</label><input class="field txt" id="btnLabel" value="Continuar" maxlength="28" autocomplete="off"></div>
+      <label class="toggle"><input type="checkbox" id="btnFull"> Ancho completo</label>
+    </div>
+    <div><div class="stage sdk-frame live-stage" id="btnStage"></div>
+      <div class="tablewrap"><table><thead><tr><th>Parte</th><th>Token</th><th>Valor</th></tr></thead><tbody id="btnTokens"></tbody></table></div></div>
+  </div>
+  <div class="code"><div class="bar"><span>html</span><button type="button" data-copy-pre>Copiar</button></div><pre id="btnHtml"></pre></div>
+
   <h2 id="btn-var">Variantes</h2>
   <p>El primario es la acción principal y el único botón que usa la marca. Las demás variantes usan tokens fijos, salvo el terciario, cuyo texto y hover siguen la marca.</p>
   <div class="demo sdk-frame"><span class="sdk-btn">Primario</span><span class="sdk-btn sdk-btn--secondary">Secundario</span><span class="sdk-btn sdk-btn--tertiary">Terciario</span><span class="sdk-btn sdk-btn--danger">Peligro</span><button class="sdk-btn" disabled>Deshabilitado</button></div>
@@ -1088,6 +1175,11 @@ function tintLottie(holder) {
   </div>
   <h2 id="btn-radio">Radio</h2>
   <p>Todos los botones usan <code>--radius-button</code>, que define el cliente. Ver <a href="#/radios">Radios y bordes</a>.</p>
+ </div>
+ <div class="panel" data-tab="especificaciones" data-label="Especificaciones" hidden>
+  <h2 id="btn-specs">Especificaciones</h2>
+  <p>Cada parte de cada variante, por estado, con la propiedad CSS y el token. Los valores siguen la marca elegida en la barra de arriba.</p>
+  <div class="tablewrap"><table><thead><tr><th>Variante</th><th>Estado</th><th>Parte</th><th>Propiedad</th><th>Token</th><th>Valor</th></tr></thead><tbody id="btnSpecs"></tbody></table></div>
  </div>
  <div class="panel" data-tab="tokens" data-label="Tokens" hidden>
   <h2 id="btn-tokens">Tokens</h2>
@@ -1116,6 +1208,17 @@ function tintLottie(holder) {
 
 <section class="page" id="pg-controles" data-title="Controles" data-g="Componentes" data-desc="Casilla, tile de ícono, celda de código y spinner." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
+  <h2 id="ctl-demo">Demo</h2>
+  <p>Elegí un control y su estado para ver qué tokens usa.</p>
+  <div class="live" id="ctlLive">
+    <div>
+      <div class="ctrl"><span class="lbl2">Control</span><div class="seg" data-k="c"><button data-v="check" aria-pressed="true">Casilla</button><button data-v="tile" aria-pressed="false">Tile</button><button data-v="otp" aria-pressed="false">Celda</button><button data-v="spin" aria-pressed="false">Spinner</button></div></div>
+      <div class="ctrl" id="ctlOptWrap"><span class="lbl2" id="ctlOptLbl">Estado</span><div class="seg" data-k="o" id="ctlOpt"></div></div>
+    </div>
+    <div><div class="stage sdk-frame live-stage" id="ctlStage"></div>
+      <div class="tablewrap"><table><thead><tr><th>Parte</th><th>Token</th><th>Valor</th></tr></thead><tbody id="ctlTokens"></tbody></table></div></div>
+  </div>
+
   <h2 id="ctl-casilla">Casilla</h2>
   <p>Marcada, usa <code>--brand-default</code> de fondo; el tilde hereda <code>--button-primary-text</code>.</p>
   <div class="stage sdk-frame"><span class="sdk-checkbox"><span class="icon icon--filled" aria-hidden="true">check</span></span><span class="sdk-text">Confirmo que leí los términos y condiciones</span></div>
@@ -1385,7 +1488,7 @@ BUILD.color = function () {
   $('#txtOk').innerHTML = 'Texto <code>#1A1A1A</code> sobre <code>' + y + '</code>: ' + ok.toFixed(1) + ':1, nivel ' + level(ok) + '.';
   $('#txtNo').innerHTML = 'Texto blanco sobre <code>' + y + '</code>: ' + no.toFixed(1) + ':1. No llega a AA. El panel lo avisa, pero no lo bloquea.';
   $('#brandPick').innerHTML = BRANDS.map(function (b, i) { return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === brandSel) + '"><i style="background:' + b.primary + '"></i>' + b.n + '</button>'; }).join('');
-  $('#brandPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; brandSel = +b.dataset.i; $$('#brandPick button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderTokens(); buildOtp(); });
+  $('#brandPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; demo.brand = +b.dataset.i; applyDemo(); buildOtp(); });
   renderTokens();
   var names = Object.keys(DATA.primitive);
   $('#prim').innerHTML = PRIM_FAM.map(function (f) {
@@ -1465,6 +1568,158 @@ BUILD.checklist = function () {
   $('#checkList').addEventListener('change', stat); stat();
 };
 
+
+/* ═════ Demos interactivas ═════ */
+var demo = { brand: 0, radius: 'full', font: 'Inter' };
+try { var sv = JSON.parse(localStorage.getItem('fidsdk-ds-demo') || 'null'); if (sv) demo = Object.assign(demo, sv); } catch (e) {}
+function curBrand() { return BRANDS[demo.brand] || BRANDS[0]; }
+function famOf(f) { return f === 'system' ? 'system-ui' : "'" + f + "'"; }
+function valOf(token) { return token === '--radius-button' ? RADII[demo.radius] + 'px' : resolve(token, curBrand()); }
+function tokRow(part, token) { var v = valOf(token), c = /^#|^rgba?\(/.test(v); return '<tr><td>' + part + '</td><td><code>' + token + '</code></td><td>' + (c ? '<span class="sw" style="background:' + v + '"></span>' : '') + copyBtn(v) + '</td></tr>'; }
+function segInit(root, state, render) {
+  $$('.seg[data-k]', root).forEach(function (seg) {
+    seg.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; state[seg.dataset.k] = b.dataset.v; $$('button', seg).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); });
+  });
+}
+function applyDemo() {
+  var b = curBrand(), fam = famOf(demo.font);
+  ensureFont(demo.font);
+  $$('.sdk-frame').forEach(function (f) {
+    if (f.closest('[data-fixed]')) return;
+    f.style.setProperty('--accent-9', b.primary); f.style.setProperty('--button-primary-text', b.text);
+    f.style.setProperty('--radius-button', RADII[demo.radius] + 'px'); f.style.setProperty('--font-family-default', fam);
+  });
+  $('#dmBrand').value = demo.brand; $('#dmRadius').value = demo.radius; $('#dmFont').value = demo.font; $('#dmDot').style.background = b.primary;
+  try { localStorage.setItem('fidsdk-ds-demo', JSON.stringify(demo)); } catch (e) {}
+  if (built.color) { brandSel = demo.brand; $$('#brandPick button').forEach(function (x) { x.setAttribute('aria-pressed', +x.dataset.i === brandSel); }); renderTokens(); }
+  if (built.botones) { renderBtnLive(); renderBtnSpecs(); }
+  if (built.controles) renderCtlLive();
+}
+function initDemoBar() {
+  $('#dmBrand').innerHTML = BRANDS.map(function (b, i) { return '<option value="' + i + '">' + b.n + '</option>'; }).join('');
+  $('#dmRadius').innerHTML = [['xs', 'Radio XS · 4'], ['s', 'Radio S · 8'], ['m', 'Radio M · 16'], ['full', 'Radio Full · 999']].map(function (r) { return '<option value="' + r[0] + '">' + r[1] + '</option>'; }).join('');
+  $('#dmFont').innerHTML = FONTS.map(function (f) { return '<option value="' + f + '">' + f + '</option>'; }).join('');
+  $('#dmBrand').addEventListener('change', function () { demo.brand = +this.value; applyDemo(); });
+  $('#dmRadius').addEventListener('change', function () { demo.radius = this.value; applyDemo(); });
+  $('#dmFont').addEventListener('change', function () { demo.font = this.value; applyDemo(); });
+}
+
+/* Botones */
+var BTN = {
+  primary: { n: 'Primario', cls: '', normal: [['Fondo', '--button-primary-bg', 'background'], ['Borde', '--button-primary-bg', 'border-color'], ['Texto', '--button-primary-text', 'color']], hover: [['Fondo', '--button-primary-bg-hover', 'background'], ['Texto', '--button-primary-text', 'color']] },
+  secondary: { n: 'Secundario', cls: 'sdk-btn--secondary', normal: [['Fondo', '--button-secondary-bg', 'background'], ['Borde', '--button-secondary-border', 'border-color'], ['Texto', '--button-secondary-text', 'color']], hover: [['Fondo', '--button-secondary-bg-hover', 'background'], ['Borde', '--button-secondary-border', 'border-color'], ['Texto', '--button-secondary-text', 'color']] },
+  tertiary: { n: 'Terciario', cls: 'sdk-btn--tertiary', normal: [['Texto', '--button-tertiary-text', 'color']], hover: [['Fondo', '--button-tertiary-bg-hover', 'background'], ['Texto', '--button-tertiary-text', 'color']] },
+  danger: { n: 'Peligro', cls: 'sdk-btn--danger', normal: [['Fondo', '--button-danger-bg', 'background'], ['Texto', '--button-danger-text', 'color']], hover: [['Fondo', '--button-danger-bg-hover', 'background'], ['Texto', '--button-danger-text', 'color']] }
+};
+var BTN_DIS = [['Fondo', '--button-disabled-bg', 'background'], ['Borde', '--button-disabled-border', 'border-color'], ['Texto', '--button-disabled-text', 'color']];
+var ST_ES = { normal: 'Normal', hover: 'Hover', disabled: 'Deshabilitado' };
+var btnSt = { v: 'primary', s: 'normal' };
+function btnParts(v, s) { return (s === 'disabled' ? BTN_DIS : BTN[v][s]).concat([['Radio', '--radius-button', 'border-radius']]); }
+function renderBtnLive() {
+  var d = BTN[btnSt.v], label = $('#btnLabel').value || 'Continuar', full = $('#btnFull').checked, w = full ? 'width:100%' : 'width:auto;min-width:180px';
+  var cls = 'sdk-btn' + (d.cls ? ' ' + d.cls : '');
+  $('#btnStage').innerHTML = btnSt.s === 'disabled' ? '<button class="' + cls + '" style="' + w + '" disabled>' + esc(label) + '</button>' : '<span class="' + cls + (btnSt.s === 'hover' ? ' force-hover' : '') + '" style="' + w + '">' + esc(label) + '</span>';
+  $('#btnTokens').innerHTML = btnParts(btnSt.v, btnSt.s).map(function (p) { return tokRow(p[0], p[1]); }).join('');
+  $('#btnHtml').textContent = '<button class="' + cls + '"' + (btnSt.s === 'disabled' ? ' disabled' : '') + '>' + label + '</button>';
+}
+function renderBtnSpecs() {
+  var rows = [];
+  Object.keys(BTN).forEach(function (v) { ['normal', 'hover', 'disabled'].forEach(function (s) { btnParts(v, s).forEach(function (p, i) { var val = valOf(p[1]), c = /^#|^rgba?\(/.test(val); rows.push('<tr><td>' + (i === 0 ? '<b>' + BTN[v].n + '</b>' : '') + '</td><td>' + (i === 0 ? ST_ES[s] : '') + '</td><td>' + p[0] + '</td><td><code>' + p[2] + '</code></td><td><code>' + p[1] + '</code></td><td>' + (c ? '<span class="sw" style="background:' + val + '"></span>' : '') + copyBtn(val) + '</td></tr>'); }); }); });
+  $('#btnSpecs').innerHTML = rows.join('');
+}
+function initBtnLive() {
+  segInit($('#btnLive'), btnSt, renderBtnLive);
+  $('#btnLabel').addEventListener('input', renderBtnLive); $('#btnFull').addEventListener('change', renderBtnLive);
+  renderBtnLive(); renderBtnSpecs();
+}
+
+/* Controles */
+var ctlSt = { c: 'check', o: '' };
+var CTL = {
+  check: { lbl: '', opts: [], parts: function () { return [['Fondo', '--brand-default'], ['Tilde', '--button-primary-text']]; }, html: function () { return '<span class="sdk-checkbox"><span class="icon icon--filled" aria-hidden="true">check</span></span><span class="sdk-text">Confirmo que leí los términos y condiciones</span>'; } },
+  tile: { lbl: 'Ícono', opts: [['pin', 'Código'], ['ar_on_you', 'Rostro'], ['shield_lock', 'Clave']], parts: function () { return [['Fondo', '--brand-tint'], ['Borde', '--stroke-brand-subtle'], ['Ícono', '--brand-default']]; }, html: function (o) { return '<span class="sdk-tile"><span class="icon" aria-hidden="true">' + (o || 'pin') + '</span></span>'; } },
+  otp: { lbl: 'Estado', opts: [['normal', 'Normal'], ['focus', 'Foco']], parts: function (o) { return o === 'focus' ? [['Borde', '--stroke-primary'], ['Aro de foco (3 px)', '--accent-4'], ['Fondo', '--bg-default'], ['Texto', '--text-primary']] : [['Borde', '--stroke-strong'], ['Fondo', '--bg-default'], ['Texto', '--text-primary']]; }, html: function (o) { return '<span class="sdk-otp-cell">4</span><span class="sdk-otp-cell' + (o === 'focus' ? ' is-focus' : '') + '">2</span>'; } },
+  spin: { lbl: '', opts: [], parts: function () { return [['Pista', '--stroke-default'], ['Arco', '--brand-default']]; }, html: function () { return '<span class="sdk-spinner" role="status" aria-label="Cargando"></span>'; } }
+};
+function renderCtlOpts() {
+  var d = CTL[ctlSt.c];
+  $('#ctlOptWrap').hidden = !d.opts.length; $('#ctlOptLbl').textContent = d.lbl;
+  ctlSt.o = d.opts.length ? d.opts[0][0] : '';
+  $('#ctlOpt').innerHTML = d.opts.map(function (o, i) { return '<button data-v="' + o[0] + '" aria-pressed="' + (i === 0) + '">' + o[1] + '</button>'; }).join('');
+}
+function renderCtlLive() {
+  var d = CTL[ctlSt.c];
+  $('#ctlStage').innerHTML = d.html(ctlSt.o);
+  $('#ctlTokens').innerHTML = d.parts(ctlSt.o).map(function (p) { return tokRow(p[0], p[1]); }).join('');
+}
+function initCtlLive() {
+  $('[data-k="c"]', $('#ctlLive')).addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctlSt.c = b.dataset.v; $$('button', this).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderCtlOpts(); renderCtlLive(); applyDemo(); });
+  $('#ctlOpt').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ctlSt.o = b.dataset.v; $$('button', this).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); renderCtlLive(); });
+  renderCtlOpts(); renderCtlLive();
+}
+
+/* Tipografía */
+var W_TOK = { 400: 'regular', 500: 'medium', 600: 'semibold', 700: 'bold' };
+function renderType() {
+  var t = DATA.textStyles.filter(function (x) { return x.name === $('#typeStyle').value; })[0], f = $('#typeFont').value;
+  var px = parseInt(t.px, 10), lh = parseInt(t.px.split('/')[1], 10), w = parseInt(t.peso, 10), ul = /subrayado/.test(t.peso), ls = /\/(xs|xxs)-/.test(t.name);
+  ensureFont(f);
+  var o = $('#typeOut');
+  o.style.cssText = 'font-family:' + famOf(f) + ',system-ui;font-size:' + px + 'px;line-height:' + lh + 'px;font-weight:' + w + ';letter-spacing:' + (ls ? '0.1px' : '0') + ';text-decoration:' + (ul ? 'underline' : 'none');
+  o.textContent = $('#typeText').value || 'Creá tu firma digital';
+  var rows = [['Fuente', '--font-family-default', famOf(f)], ['Tamaño', '--font-size-' + px, px + 'px'], ['Interlineado', '--font-line-height-' + lh, lh + 'px'], ['Peso', '--font-style-' + W_TOK[w], String(w)], ['Espaciado entre letras', ls ? '--font-letter-spacing-small' : '--font-letter-spacing-default', ls ? '0.1px' : '0']];
+  $('#typeSpecs').innerHTML = rows.map(function (r) { return '<tr><td>' + r[0] + '</td><td><code>' + r[1] + '</code></td><td>' + copyBtn(r[2]) + '</td></tr>'; }).join('');
+  $('#typeCss').textContent = '/* ' + t.name + ' */\n.texto {\n  font-family: var(--font-family-default);\n  font-size: var(' + rows[1][1] + ');\n  line-height: var(' + rows[2][1] + ');\n  font-weight: var(' + rows[3][1] + ');\n  letter-spacing: var(' + rows[4][1] + ');' + (ul ? '\n  text-decoration: underline;' : '') + '\n}';
+}
+function initTypeLive() {
+  $('#typeStyle').innerHTML = DATA.textStyles.map(function (t) { return '<option' + (t.name === 'text/m-semibold' ? ' selected' : '') + '>' + t.name + '</option>'; }).join('');
+  $('#typeFont').innerHTML = FONTS.map(function (f) { return '<option' + (f === demo.font ? ' selected' : '') + '>' + f + '</option>'; }).join('');
+  ['#typeStyle', '#typeFont'].forEach(function (s) { $(s).addEventListener('change', renderType); });
+  $('#typeText').addEventListener('input', renderType);
+  renderType();
+}
+
+/* Espaciado */
+function renderSp() {
+  var pad = $('#spPad').value, gap = $('#spGap').value, ico = $('#spIcon').value, show = $('#spShow').checked;
+  $('#spStage').innerHTML = '<div class="sp-card' + (show ? ' show' : '') + '" style="padding:var(' + pad + ')"><ul class="sdk-list" style="gap:var(' + gap + ')">' +
+    [['pin', 'Te enviaremos un código para verificar tu correo.'], ['ar_on_you', 'Vamos a escanear tu rostro.'], ['shield_lock', 'Vas a crear tu clave de firma.']].map(function (x) { return '<li style="gap:var(' + ico + ')"><span class="sdk-tile"><span class="icon" aria-hidden="true">' + x[0] + '</span></span>' + x[1] + '</li>'; }).join('') + '</ul></div>';
+  $('#spCss').textContent = '.sdk-card { padding: var(' + pad + '); }\n.sdk-list { display: grid; gap: var(' + gap + '); }\n.sdk-list li { display: flex; gap: var(' + ico + '); }';
+  applyDemo();
+}
+function initSpLive() {
+  var opts = Object.keys(DATA.size).filter(function (k) { return /^--spacing-/.test(k) && k !== '--spacing-0'; });
+  [['#spPad', '--spacing-16'], ['#spGap', '--spacing-12'], ['#spIcon', '--spacing-12']].forEach(function (x) { $(x[0]).innerHTML = opts.map(function (k) { return '<option value="' + k + '"' + (k === x[1] ? ' selected' : '') + '>' + k + ' · ' + DATA.size[k] + '</option>'; }).join(''); $(x[0]).addEventListener('change', renderSp); });
+  $('#spShow').addEventListener('change', renderSp);
+  renderSp();
+}
+
+/* Radios */
+var radSt = { r: 'full' };
+function renderRad() {
+  var custom = radSt.r === 'custom', v = custom ? +$('#radRange').value : RADII[radSt.r];
+  $('#radCustomWrap').hidden = !custom; $('#radVal').textContent = v + ' px';
+  $('#radWrap').style.setProperty('--radius-button', v + 'px');
+  var cfg = { radius: radSt.r }; if (custom) cfg.radiusCustom = v;
+  $('#radCfg').textContent = JSON.stringify(cfg, null, 2);
+}
+function initRadLive() { segInit($('#radLive'), radSt, renderRad); $('#radRange').addEventListener('input', renderRad); renderRad(); }
+
+/* Elevación */
+var elSt = { e: 'border' };
+function renderEl() {
+  var c = $('#elCard'), s = DATA.shadows.filter(function (x) { return x.name === elSt.e; })[0];
+  if (!s) { c.style.border = '1px solid var(--stroke-default)'; c.style.boxShadow = 'none'; $('#elNote').textContent = 'Así separa capas el SDK: fondo blanco y borde de 1 px, sin sombra.'; $('#elCss').textContent = '.sdk-card {\n  background: var(--bg-default);\n  border: 1px solid var(--stroke-default);\n}'; return; }
+  c.style.border = '0'; c.style.boxShadow = s.css;
+  $('#elNote').textContent = 'Estilo de efecto de Figma (' + s.layers + (s.layers > 1 ? ' capas' : ' capa') + '). Todavía no es un token del paquete.';
+  $('#elCss').textContent = '/* ' + s.name + ' (Figma) */\nbox-shadow: ' + s.css + ';';
+}
+function initElLive() {
+  $('#elSeg').innerHTML = '<button data-v="border" aria-pressed="true">Borde</button>' + DATA.shadows.map(function (s) { return '<button data-v="' + s.name + '" aria-pressed="false">' + s.name.replace('shadow/', '') + '</button>'; }).join('');
+  segInit($('#elLive'), elSt, renderEl); renderEl();
+}
+var INIT = { botones: initBtnLive, controles: initCtlLive, tipografia: initTypeLive, espaciado: initSpLive, radios: initRadLive, elevacion: initElLive };
+
 /* ═════ Navegación: páginas, pestañas e índice ═════ */
 var PAGES = $$('.page').map(function (p) { return { id: p.id.slice(3), title: p.dataset.title, g: p.dataset.g, desc: p.dataset.desc, el: p }; });
 var built = {};
@@ -1476,11 +1731,13 @@ function show() {
   panels.forEach(function (x) { x.hidden = x.dataset.tab !== tab; });
   $('#pgCrumb').textContent = P.g; $('#pgTitle').textContent = P.title; $('#pgDesc').textContent = P.desc;
   document.title = P.title + ' · FID SDK';
-  $('#tabsbar').classList.toggle('solo', panels.length < 2);
   $('#pgTabs').innerHTML = panels.length < 2 ? '' : panels.map(function (x) { return '<a href="#/' + P.id + '/' + x.dataset.tab + '"' + (x.dataset.tab === tab ? ' aria-current="page"' : '') + '>' + x.dataset.label + '</a>'; }).join('');
   $$('#nav a').forEach(function (a) { a.classList.toggle('on', a.dataset.id === P.id); });
   $('#jump').value = P.id;
-  if (!built[P.id] && BUILD[P.id]) { BUILD[P.id](); built[P.id] = 1; }
+  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); }
+  var hasDemo = !!$$('.sdk-frame', P.el).filter(function (f) { return !f.closest('[data-fixed]'); }).length;
+  $('#tabsbar').classList.toggle('solo', panels.length < 2); $('#tabsbar').classList.toggle('nodemo', !hasDemo); $('#tabsbar').classList.toggle('empty', panels.length < 2 && !hasDemo);
+  applyDemo();
   var i = PAGES.indexOf(P), prev = PAGES[i - 1], next = PAGES[i + 1];
   $('#pager').innerHTML = (prev ? '<a href="#/' + prev.id + '"><small>Anterior</small>' + prev.title + '</a>' : '') + (next ? '<a class="next" href="#/' + next.id + '"><small>Siguiente</small>' + next.title + '</a>' : '');
   buildOtp();
@@ -1509,7 +1766,7 @@ document.addEventListener('click', function (e) {
   var c = e.target.closest('[data-copy]'); if (c) { copy(c.getAttribute('data-copy')); return; }
   var p = e.target.closest('[data-copy-pre]'); if (p) { copy(p.closest('.code').querySelector('pre').textContent); return; }
 });
-document.addEventListener('DOMContentLoaded', function () { buildNav(); show(); });
+document.addEventListener('DOMContentLoaded', function () { buildNav(); initDemoBar(); show(); });
 </script>
 </body>
 </html>
