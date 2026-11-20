@@ -325,6 +325,17 @@ td.wrap{white-space:normal}
 .el-card b{display:block;color:var(--text-primary);font-size:var(--font-size-16);margin-bottom:var(--sp-1)}
 .type-out{width:100%;background:var(--bg-default);border-radius:var(--radius-md);padding:var(--sp-6);overflow-wrap:anywhere;color:var(--text-primary)}
 @media (max-width:980px){.live{grid-template-columns:minmax(0,1fr)}}
+
+/* Componentes de Figma */
+.fig-stage{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);padding:var(--sp-4);display:flex;align-items:center;justify-content:center;min-height:180px;overflow:auto}
+.fig-stage img{max-width:100%;height:auto;display:block}
+.figgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0 var(--sp-6)}
+.figgrid figure{margin:0;border:1px solid var(--stroke-subtle);border-radius:var(--radius-md);overflow:hidden;display:flex;flex-direction:column}
+.figgrid .im{flex:1;display:flex;align-items:center;justify-content:center;min-height:96px;background:var(--bg-default);padding:var(--sp-2)}
+.figgrid img{max-width:100%;height:auto;display:block}
+.figgrid figcaption{font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary);padding:var(--sp-2) var(--sp-3);border-top:1px solid var(--stroke-subtle);background:var(--bg-surface)}
+.varchips{display:flex;flex-wrap:wrap;gap:var(--sp-1);margin-top:var(--sp-3);font-size:var(--font-size-12);color:var(--text-tertiary);align-items:center}
+.varchips code{font-size:11px}
 /* ═════ Responsive ═════ */
 @media (max-width:1180px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -384,7 +395,7 @@ td.wrap{white-space:normal}
   <p>Es la referencia completa para diseñar e implementar el SDK de FID: los fundamentos visuales, los componentes, la personalización de marca, la accesibilidad y el código. Todo sale de los tokens del archivo de Figma “FID SDK — Variables”; si algo de acá contradice a Figma, gana Figma.</p>
   <div class="cards">
     <div class="card"><a href="#/color"><h4>Fundamentos</h4><p>Color, tipografía, espaciado, radios y bordes, elevación, íconos, ilustraciones y Lotties.</p></a></div>
-    <div class="card"><a href="#/botones"><h4>Componentes</h4><p>Botones, controles y contenido, con sus estados, sus tokens y el CSS listo para copiar.</p></a></div>
+    <div class="card"><a href="#/c-acciones"><h4>Componentes</h4><p>Todos los componentes que usan las pantallas del SDK, exportados de Figma, y las recetas de código del paquete.</p></a></div>
     <div class="card brand"><a href="#/personalizacion"><h4>Personalización</h4><p>Las cuatro propiedades que define cada cliente y cómo se aplican en el SDK.</p></a></div>
     <div class="card"><a href="#/accesibilidad"><h4>Calidad</h4><p>Accesibilidad, contraste y la lista de verificación antes de entregar.</p></a></div>
   </div>
@@ -799,7 +810,8 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
 
 <!-- ════════════════════ COMPONENTES ════════════════════ -->
 
-<section class="page" id="pg-botones" data-title="Botones" data-g="Componentes" data-desc="Primario, secundario, terciario, de peligro y deshabilitado." hidden>
+{{FIGMA_PAGES}}
+<section class="page" id="pg-botones" data-title="Botones" data-g="Recetas de código" data-desc="La receta CSS del paquete para los botones: primario, secundario, terciario, de peligro y deshabilitado." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
   <h2 id="btn-demo">Demo</h2>
   <p>Elegí la variante y el estado. La vista y los tokens cambian con la marca, el radio y la fuente de la barra de arriba.</p>
@@ -847,7 +859,7 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
  </div>
 </section>
 
-<section class="page" id="pg-controles" data-title="Controles" data-g="Componentes" data-desc="Casilla, tile de ícono, celda de código y spinner." hidden>
+<section class="page" id="pg-controles" data-title="Controles" data-g="Recetas de código" data-desc="La receta CSS del paquete para la casilla, el tile de ícono, la celda de código y el spinner." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
   <h2 id="ctl-demo">Demo</h2>
   <p>Elegí un control y su estado para ver qué tokens usa.</p>
@@ -881,7 +893,7 @@ function loadFont(name) {           <span class="tk-c">// Inter ya está cargada
  </div>
 </section>
 
-<section class="page" id="pg-contenido" data-title="Contenido" data-g="Componentes" data-desc="Link, pie “Powered by FID” y badge de error." hidden>
+<section class="page" id="pg-contenido" data-title="Link, pie y badge" data-g="Recetas de código" data-desc="La receta CSS del paquete para el link, el pie “Powered by FID” y el badge de error." hidden>
  <div class="panel" data-tab="resumen" data-label="Resumen">
   <h2 id="cnt-link">Link</h2>
   <p>Siempre <code>--text-link</code> con subrayado. No cambia con la marca.</p>
@@ -1317,6 +1329,30 @@ function initElLive() {
 }
 var INIT = { botones: initBtnLive, controles: initCtlLive, tipografia: initTypeLive, espaciado: initSpLive, radios: initRadLive, elevacion: initElLive };
 
+
+/* ═════ Componentes de Figma: elegir variante ═════ */
+function initFig(root) {
+  var d = DATA.fig[root.dataset.fig], sels = $$('select[data-p]', root);
+  var cur = Object.assign({}, d.cells[0].vp);
+  sels.forEach(function (sel) {
+    var p = sel.dataset.p, seen = [];
+    d.cells.forEach(function (c) { if (seen.indexOf(c.vp[p]) < 0) seen.push(c.vp[p]); });
+    sel.innerHTML = seen.map(function (v) { return '<option>' + esc(v) + '</option>'; }).join('');
+    sel.addEventListener('change', function () { cur[p] = sel.value; pick(p); });
+  });
+  function score(c, changed) { var n = 0; for (var k in cur) { if (c.vp[k] === cur[k]) n += (k === changed ? 100 : 1); } return n; }
+  function pick(changed) {
+    var best = d.cells[0], bs = -1;
+    d.cells.forEach(function (c) { var s = score(c, changed); if (s > bs) { bs = s; best = c; } });
+    var exact = d.props.every(function (k) { return best.vp[k] === cur[k]; });
+    cur = Object.assign({}, best.vp);
+    sels.forEach(function (sel) { sel.value = cur[sel.dataset.p]; });
+    var img = $('.fig-stage img', root); img.src = best.f; img.width = best.w; img.height = best.h;
+    $('.figinfo', root).textContent = exact ? '' : 'Esa combinación no está entre las exportadas: se muestra la más cercana.';
+    $('.varchips', root).innerHTML = best.vars.length ? 'Variables vinculadas en Figma: ' + best.vars.map(function (v) { return '<code>' + esc(v) + '</code>'; }).join(' ') : '';
+  }
+  pick(null);
+}
 /* ═════ Navegación: páginas, pestañas e índice ═════ */
 var PAGES = $$('.page').map(function (p) { return { id: p.id.slice(3), title: p.dataset.title, g: p.dataset.g, desc: p.dataset.desc, el: p }; });
 var built = {};
@@ -1331,7 +1367,7 @@ function show() {
   $('#pgTabs').innerHTML = panels.length < 2 ? '' : panels.map(function (x) { return '<a href="#/' + P.id + '/' + x.dataset.tab + '"' + (x.dataset.tab === tab ? ' aria-current="page"' : '') + '>' + x.dataset.label + '</a>'; }).join('');
   $$('#nav a').forEach(function (a) { a.classList.toggle('on', a.dataset.id === P.id); });
   $('#jump').value = P.id;
-  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); }
+  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); $$('.figlive', P.el).forEach(initFig); }
   var hasDemo = !!$$('.sdk-frame', P.el).filter(function (f) { return !f.closest('[data-fixed]'); }).length;
   $('#tabsbar').classList.toggle('solo', panels.length < 2); $('#tabsbar').classList.toggle('nodemo', !hasDemo); $('#tabsbar').classList.toggle('empty', panels.length < 2 && !hasDemo);
   applyDemo();
