@@ -1,47 +1,59 @@
 # Tokens del paquete (DESIGN.md) que se aplican en cada parte de las pantallas del SDK.
 # Las pantallas y las cajas salen de Figma ("FID SDK — Variables", página Flujo) y están en pantallas.json
 # (recorte x 300–1140 y desde abajo del header, que lo pone el integrador; imágenes a 2x en ../pantallas/).
-# Cada clave: (nombre, tokens, sigue la marca, nota).
+# pantallas_medidas.json trae, por pantalla y por parte, los estilos de texto (tamaño/interlineado/peso)
+# y el radio medidos en Figma; build.py los cruza con los estilos de texto y los radios del paquete.
+# Cada clave: (nombre, [(función, token)], nota). La tipografía, la fuente y el radio se agregan solos.
 
 KEYS = {
- 'bg': ('Fondo de la app', ['--bg-surface'], False, 'El fondo que rodea la tarjeta.'),
- 'card': ('Tarjeta', ['--bg-default', '--stroke-default', '--radius-lg'], False, 'El contenedor del paso. Su radio es fijo: no cambia con el radio del cliente.'),
- 'foot': ('Pie “Powered by FID”', ['--bg-surface'], False, 'El logo FID es fijo: no se personaliza.'),
- 'th': ('Título', ['--text-primary'], False, 'Títulos y contenido principal.'),
- 'tt': ('Título y descripción', ['--text-primary', '--text-secondary'], False, 'Título con su bajada.'),
- 'tb': ('Texto', ['--text-secondary'], False, 'Cuerpo y descripciones.'),
- 'tl': ('Texto con link', ['--text-secondary', '--text-link'], False, 'El link va subrayado y no cambia con la marca.'),
- 'lk': ('Link', ['--text-link'], False, 'Links con subrayado. No cambia con la marca.'),
- 'ta': ('Texto de apoyo', ['--text-tertiary'], False, 'Apoyo, metadatos y ayudas.'),
- 'callout': ('Aviso', ['--feedback-warning-bg', '--text-secondary'], False, 'Fondo de advertencia, fijo.'),
- 'bp': ('Botón primario', ['--button-primary-bg', '--button-primary-text', '--radius-button', '--font-family-default'], True, 'Cambia con las cuatro propiedades del cliente: color, color del texto, radio y fuente.'),
- 'bs': ('Botón secundario', ['--button-secondary-bg', '--button-secondary-border', '--button-secondary-text', '--radius-button'], True, 'Los colores son fijos; el radio cambia con el cliente.'),
- 'bd': ('Botón deshabilitado', ['--button-disabled-bg', '--button-disabled-border', '--button-disabled-text', '--radius-button'], True, 'Los colores son fijos; el radio cambia con el cliente.'),
- 'oc': ('Celdas de código', ['--stroke-strong'], False, 'Borde de la celda de código.'),
- 'of': ('Celda con foco', ['--stroke-primary', '--accent-4'], True, 'Borde de marca y aro de foco de 3 px con el paso 4 de la escala de acento.'),
- 'os': ('Celdas con el código correcto', ['--feedback-success-border'], False, 'Estado de éxito, fijo.'),
- 'oe': ('Celdas con el código incorrecto', ['--feedback-error-border'], False, 'Estado de error, fijo.'),
- 'ha': ('Ayuda del campo', ['--text-tertiary'], False, 'Apoyo, metadatos y ayudas.'),
- 'he': ('Mensaje de error', ['--feedback-error-text', '--feedback-error-icon'], False, 'Estado de error, fijo.'),
- 'hs': ('Mensaje de éxito', ['--feedback-success-text', '--feedback-success-icon'], False, 'Estado de éxito, fijo.'),
- 'pc': ('Campo de clave', ['--stroke-strong', '--text-primary', '--text-placeholder', '--text-tertiary'], False, 'Borde del campo, texto, placeholder y ayuda.'),
- 'pf': ('Campo con foco', ['--stroke-primary', '--text-primary'], True, 'El borde de foco es el color de marca.'),
- 'pe': ('Campo con error', ['--feedback-error-border', '--feedback-error-text'], False, 'Estado de error, fijo.'),
- 'dv': ('Separador', ['--stroke-subtle'], False, 'Líneas finas.'),
- 'li': ('Lista con tile de ícono', ['--brand-tint', '--stroke-brand-subtle', '--brand-default', '--text-primary'], True, 'Fondo, borde y color del ícono salen de la escala de acento.'),
- 'ck': ('Casilla', ['--brand-default', '--button-primary-text'], True, 'El fondo es el color de marca y el tilde usa el color de texto del botón primario.'),
- 'bi': ('Badge informativo', ['--feedback-info-bg', '--feedback-info-border', '--feedback-info-text'], False, 'Estado informativo, fijo.'),
- 'pr': ('Progreso de lectura', ['--bg-muted', '--brand-default', '--text-primary', '--text-secondary'], True, 'La barra de avance es el color de marca.'),
- 'sp': ('Spinner', ['--stroke-default', '--brand-default'], True, 'Pista gris y tramo de marca.'),
- 'tp': ('Tooltip', ['--bg-inverse', '--text-inverse'], False, 'Fondo oscuro, fijo.'),
- 'il': ('Ilustración', ['.ill-primary', '.ill-primary-50'], True, 'SVG inline: las partes de marca siguen el color del cliente.'),
- 'lt_ok': ('Lottie de éxito', ['success-check.json'], False, 'Es fijo: verde, no se recolorea con la marca.'),
- 'lt_face': ('Lottie del escáner facial', ['face-scan.json', '.lt-primary', '.lt-primary-50'], True, 'Se recolorea con tint-lottie.js.'),
- 'lt_brand': ('Animación de marca', ['.lt-primary'], True, 'El azul sigue la marca.'),
- 'cs': ('Lottie card skeleton', ['card-skeleton.json', '.lt-primary'], True, 'Sus rellenos azules siguen la marca con tint-lottie.js.'),
- 'ae_err': ('Ícono de error', ['--feedback-error-bg', '--feedback-error-text'], False, 'Estado de error, fijo: no sigue la marca.'),
- 'ae_warn': ('Ícono de advertencia', ['--feedback-warning-bg', '--feedback-warning-icon'], False, 'Estado de advertencia, fijo.'),
+ 'bg': ('Fondo de la app', [('Fondo', '--bg-surface')], 'El fondo que rodea la tarjeta.'),
+ 'card': ('Tarjeta', [('Fondo', '--bg-default'), ('Borde', '--stroke-default'), ('Radio', '--radius-lg')], 'El contenedor del paso. Su radio es fijo: no cambia con el radio del cliente.'),
+ 'foot': ('Pie “Powered by FID”', [('Fondo', '--bg-surface')], 'El logo FID es fijo: no se personaliza.'),
+ 'th': ('Título', [('Texto', '--text-primary')], ''),
+ 'tt': ('Título y descripción', [('Título', '--text-primary'), ('Descripción', '--text-secondary')], ''),
+ 'tb': ('Texto', [('Texto', '--text-secondary')], ''),
+ 'tl': ('Texto con link', [('Texto', '--text-secondary'), ('Link', '--text-link')], 'El link va subrayado y no cambia con la marca.'),
+ 'lk': ('Link', [('Texto', '--text-link')], 'Links con subrayado. No cambia con la marca.'),
+ 'ta': ('Texto de apoyo', [('Texto', '--text-tertiary')], ''),
+ 'callout': ('Aviso', [('Fondo', '--feedback-warning-bg'), ('Texto', '--text-secondary')], 'Fondo de advertencia, fijo.'),
+ 'bp': ('Botón primario', [('Fondo', '--button-primary-bg'), ('Texto', '--button-primary-text')], 'Cambia con las cuatro propiedades del cliente.'),
+ 'bs': ('Botón secundario', [('Fondo', '--button-secondary-bg'), ('Borde', '--button-secondary-border'), ('Texto', '--button-secondary-text')], 'Los colores son fijos; el radio y la fuente cambian con el cliente.'),
+ 'bd': ('Botón deshabilitado', [('Fondo', '--button-disabled-bg'), ('Borde', '--button-disabled-border'), ('Texto', '--button-disabled-text')], 'Los colores son fijos; el radio y la fuente cambian con el cliente.'),
+ 'oc': ('Celdas de código', [('Borde', '--stroke-strong')], ''),
+ 'of': ('Celda con foco', [('Borde', '--stroke-primary'), ('Aro de foco', '--accent-4')], 'Aro de 3 px, sin desenfoque.'),
+ 'os': ('Celdas con el código correcto', [('Borde', '--feedback-success-border')], 'Estado de éxito, fijo.'),
+ 'oe': ('Celdas con el código incorrecto', [('Borde', '--feedback-error-border')], 'Estado de error, fijo.'),
+ 'ha': ('Ayuda del campo', [('Texto', '--text-tertiary')], ''),
+ 'he': ('Mensaje de error', [('Texto', '--feedback-error-text'), ('Ícono', '--feedback-error-icon')], 'Estado de error, fijo.'),
+ 'hs': ('Mensaje de éxito', [('Texto', '--feedback-success-text'), ('Ícono', '--feedback-success-icon')], 'Estado de éxito, fijo.'),
+ 'pc': ('Campo de clave', [('Borde', '--stroke-strong'), ('Texto', '--text-primary'), ('Placeholder', '--text-placeholder'), ('Ayuda', '--text-tertiary')], ''),
+ 'pf': ('Campo con foco', [('Borde', '--stroke-primary'), ('Texto', '--text-primary')], 'El borde de foco es el color de marca.'),
+ 'pe': ('Campo con error', [('Borde', '--feedback-error-border'), ('Mensaje', '--feedback-error-text')], 'Estado de error, fijo.'),
+ 'dv': ('Separador', [('Línea', '--stroke-subtle')], ''),
+ 'li': ('Lista con tile de ícono', [('Fondo del tile', '--brand-tint'), ('Borde del tile', '--stroke-brand-subtle'), ('Ícono', '--brand-default'), ('Texto', '--text-primary')], ''),
+ 'ck': ('Casilla', [('Fondo', '--brand-default'), ('Tilde', '--button-primary-text')], ''),
+ 'bi': ('Badge informativo', [('Fondo', '--feedback-info-bg'), ('Borde', '--feedback-info-border'), ('Texto', '--feedback-info-text')], 'Estado informativo, fijo.'),
+ 'pr': ('Progreso de lectura', [('Pista', '--bg-muted'), ('Avance', '--brand-default'), ('Texto', '--text-primary'), ('Contador', '--text-secondary')], ''),
+ 'sp': ('Spinner', [('Pista', '--stroke-default'), ('Tramo', '--brand-default')], ''),
+ 'tp': ('Tooltip', [('Fondo', '--bg-inverse'), ('Texto', '--text-inverse')], ''),
+ 'il': ('Ilustración', [('Partes de marca', '.ill-primary'), ('Partes suaves', '.ill-primary-50')], 'SVG inline: el color lo pone el CSS.'),
+ 'lt_ok': ('Lottie de éxito', [('Archivo', 'success-check.json')], 'Es fijo: verde, no se recolorea con la marca.'),
+ 'lt_face': ('Lottie del escáner facial', [('Archivo', 'face-scan.json'), ('Trazo', '.lt-primary'), ('Silueta', '.lt-primary-50')], 'Se recolorea con tint-lottie.js.'),
+ 'lt_brand': ('Animación de marca', [('Color', '.lt-primary')], ''),
+ 'cs': ('Lottie card skeleton', [('Archivo', 'card-skeleton.json'), ('Rellenos', '.lt-primary')], 'Se recolorea con tint-lottie.js.'),
+ 'ae_err': ('Ícono de error', [('Fondo', '--feedback-error-bg'), ('Ícono', '--feedback-error-text')], 'Estado de error, fijo: no sigue la marca.'),
+ 'ae_warn': ('Ícono de advertencia', [('Fondo', '--feedback-warning-bg'), ('Ícono', '--feedback-warning-icon')], 'Estado de advertencia, fijo.'),
 }
+
+# Clave de las medidas de Figma para cada clave final.
+MEDIDA = {'ae_err': 'ae', 'ae_warn': 'ae', 'lt_ok': 'lt', 'lt_face': 'lt', 'lt_brand': 'lt', 'cs': 'im', 'callout': 'ta'}
+
+# Partes que siempre usan --radius-button (el radio que elige el cliente).
+RADIO_BOTON = {'bp', 'bs', 'bd'}
+# Partes cuyo radio medido incluye el aro de foco de 3 px.
+CON_ARO = {'of', 'pf'}
+# Partes donde no se informa el radio medido (la forma es del ícono o del componente).
+SIN_RADIO = {'sp', 'card', 'bg', 'foot'}
 
 # Una página por flujo, en el orden de Figma.
 FLOW_PAGES = [
@@ -51,6 +63,6 @@ FLOW_PAGES = [
  ('p-errores', 'Errores'),
 ]
 
-# Estado que distingue pantallas con el mismo título.
-ESTADOS = [('oe', 'con error'), ('pe', 'con error'), ('he', 'con error'), ('os', 'código correcto'), ('hs', 'código correcto'),
-           ('of', 'con foco'), ('pf', 'con foco'), ('tp', 'con tooltip')]
+# Nombre de la variación según lo que tiene la pantalla.
+ESTADOS = [('oe', 'Con error'), ('pe', 'Con error'), ('he', 'Con error'), ('os', 'Código correcto'), ('hs', 'Código correcto'),
+           ('of', 'Con foco'), ('pf', 'Con foco'), ('tp', 'Con tooltip')]
