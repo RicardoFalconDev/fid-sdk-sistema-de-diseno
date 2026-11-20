@@ -1,175 +1,155 @@
-# Datos exportados de Figma "FID SDK — Variables" (página Flujo, componentes de librería usados en las pantallas del SDK).
-# Cada hoja se armó con instancias reales de las variantes; las celdas son posiciones dentro de la hoja (px a 1x).
-# vars = variables vinculadas en Figma a esa variante (nombre tal como está en la librería).
+# Datos exportados de Figma "FID SDK — Variables" (página Flujo 8:2).
+# Solo están las variantes que las pantallas del SDK usan directamente (instancias de primer nivel,
+# no las que van anidadas dentro de otro componente). Se excluyeron íconos sueltos (icons firmador,
+# Icons, "icons "), placeholders (Image swapper, replace) y piezas de documentación (Note, LayoutSidebar).
+# Todas las celdas salen de una misma hoja exportada a 2x; x, y, w, h son px a 1x dentro de esa hoja.
+# Cada celda: (etiqueta, propiedades en Figma, set de Figma, x, y, w, h, usos, pantallas, variables vinculadas)
+
+F, O, A, E = 'Firmar documento', 'Olvidé mi clave de firma', 'Flujo Alta', 'Errores'
+TODAS = [F, O, A, E]
 B = 'Primitves/brand/700 main'
 W = 'Color/Key Colors/white'
 N90 = 'Color/Primitives/Neutral/neutral90'
 N30 = 'Color/Primitives/Neutral/neutral30'
-N20 = 'Color/Primitives/Neutral/neutral20'
-N80 = 'Color/Primitives/Neutral/neutral80'
 DIS = 'Color/Buttons/Disabled/color-interactive-disabled'
 ODIS = 'Color/Buttons/Disabled/color-on-interactive-disabled'
 BGD = 'Backgrounds/White-Dark/color-bg-default'
 TXD = 'Texts/color-text-default'
-ERB = 'Feedback/Error/color-error-bg-alert'
+STD = 'Strokes/color-strokes-default'
+PW_F = 'state=default, density=default, theme=light'
 
 SHEETS = [
- dict(key='button', frame='180:3', fw=1520, fh=657, props=['Variant', 'State', 'Size'], fixed={'on Dark': 'False', 'has Text': 'True'}, cells=[
-  (('Primary', 'Hover', 'Large'), 40, 40, 256, 48, ['Primitves/brand/300', W]),
-  (('Outline', 'Hover', 'Large'), 336, 40, 256, 48, ['Color/Primitives/Neutral/Neutral-alpha/alpha10', 'Color/Primitives/Neutral/neutral70', N30]),
-  (('Primary', 'Default', 'Large'), 632, 40, 256, 48, [B, W]),
-  (('Outline', 'Default', 'Large'), 928, 40, 256, 48, [N90, N30]),
-  (('Primary', 'Disabled', 'Large'), 1224, 40, 256, 48, [DIS, ODIS]),
-  (('Outline', 'Disabled', 'Large'), 40, 128, 256, 48, ['Color/Buttons/Disabled/color-interactive-outline', ODIS]),
-  (('Black', 'Default', 'Large'), 336, 128, 256, 48, [N20, W]),
-  (('None', 'Skeleton', 'Large'), 632, 128, 256, 49, []),
-  (('Alt', 'Default', 'Large'), 928, 128, 256, 48, [B]),
-  (('Alt', 'Loading', 'Large'), 1224, 128, 256, 48, ['Primitves/brand/500']),
-  (('Outline', 'Loading', 'Large'), 40, 216, 256, 48, [N90, 'Primitves/brand/500']),
-  (('Black', 'Disabled', 'Large'), 336, 216, 256, 48, [DIS, ODIS]),
-  (('Alt', 'Disabled', 'Large'), 632, 216, 256, 48, ['Color/Primitives/Neutral/Neutral-alpha/alpha10', ODIS]),
-  (('Black', 'Hover', 'Large'), 928, 216, 256, 48, ['Color/Primitives/Neutral/Neutral-alpha/alpha50', W]),
-  (('Alt', 'Hover', 'Large'), 1224, 216, 256, 48, ['Primitves/brand/800']),
-  (('Primary', 'inProgress', 'Large'), 40, 304, 256, 49, [B, W]),
-  (('Black', 'inProgress', 'Large'), 336, 304, 256, 48, [N20, 'Color/Primitives/Neutral/neutral10', W]),
-  (('Primary', 'Active', 'Large'), 632, 304, 256, 48, [B, W]),
-  (('Black', 'Active', 'Large'), 928, 304, 256, 48, ['Color/Primitives/Neutral/neutral10', W]),
-  (('Primary', 'Loading', 'Large'), 1224, 304, 256, 49, [B, W]),
-  (('Black', 'Loading', 'Large'), 40, 392, 256, 49, [N20, W]),
-  (('Alt', 'Active', 'Large'), 336, 392, 256, 48, ['Primitves/brand/800']),
-  (('Outline', 'Active', 'Large'), 632, 392, 256, 48, ['Color/Primitives/Neutral/Neutral-alpha/alpha50', 'Color/Primitives/Neutral/neutral70', N30]),
-  (('Primary', 'Focused', 'Large'), 928, 392, 256, 48, [B, N80, W]),
-  (('Black', 'Focused', 'Large'), 1224, 392, 256, 48, [N20, N80, W]),
-  (('Alt', 'Focused', 'Large'), 40, 480, 256, 48, [N80, B]),
-  (('Outline', 'Focused', 'Large'), 336, 480, 256, 48, [N80, N90, N30]),
-  (('Ghost', 'Default', 'Large'), 632, 480, 256, 48, [W, B]),
-  (('Ghost', 'Loading', 'Large'), 928, 480, 256, 48, [W, 'Primitves/brand/500']),
-  (('Ghost', 'Disabled', 'Large'), 1224, 480, 256, 48, [DIS, ODIS]),
-  (('Ghost', 'Hover', 'Large'), 40, 568, 256, 48, ['Primitves/brand/50', B]),
-  (('Ghost', 'Active', 'Large'), 336, 568, 256, 48, ['Primitves/brand/100', B]),
-  (('Ghost', 'Focused', 'Large'), 632, 568, 256, 48, [W, N80, B]),
-  (('Primary', 'Default', 'Medium'), 928, 568, 256, 36, [B, W]),
-  (('Primary', 'Default', 'Small'), 1224, 568, 117, 36, [B, W]),
+ dict(key='button', cells=[
+  ('Outline · Default · Small', 'Variant=Outline, State=Default, Size=Small, on Dark=False, has Text=True', '8:3', 925, 40, 117, 36, 125, TODAS, [N90, N30]),
+  ('Secondary Button · Default · xsm', 'Type=Secondary Button, Status=Default, Size=xsm', '8:1029', 1082, 40, 102, 34, 96, [F, O, A], [BGD, STD, TXD]),
+  ('Outline · Default · Large', 'Variant=Outline, State=Default, Size=Large, on Dark=False, has Text=True', '8:3', 1224, 40, 256, 48, 82, TODAS, [N90, N30]),
+  ('Primary · Default · Large', 'Variant=Primary, State=Default, Size=Large, on Dark=False, has Text=True', '8:3', 40, 148, 256, 48, 68, TODAS, [B, W]),
+  ('Primary · Disabled · Large', 'Variant=Primary, State=Disabled, Size=Large, on Dark=False, has Text=True', '8:3', 336, 148, 256, 48, 53, [F, O, A], [DIS, ODIS]),
+  ('Outline · Disabled · Large', 'Variant=Outline, State=Disabled, Size=Large, on Dark=False, has Text=True', '8:3', 632, 148, 256, 48, 38, [F, O, A], ['Color/Buttons/Disabled/color-interactive-outline', ODIS]),
  ]),
- dict(key='button-small', frame='180:519', fw=1558, fh=196, props=['Variant', 'State'], fixed={'on Dark': 'False', 'Icon': 'False', 'Text': 'True', 'is Loading': 'false'}, cells=[
-  (('Tertiary', 'Default'), 40, 40, 70, 36, []), (('Secundary', 'Default'), 150, 40, 70, 36, []), (('Primary', 'Default'), 260, 40, 70, 36, []),
-  (('Primary', 'Loading'), 370, 40, 48, 40, []), (('Primary', 'Disabled'), 458, 40, 70, 36, []), (('Tertiary', 'Disabled'), 568, 40, 70, 36, []),
-  (('Primary', 'Hover'), 678, 40, 70, 36, []), (('Tertiary', 'Hover'), 788, 40, 70, 36, []), (('Primary', 'Progress'), 898, 40, 70, 37, []),
-  (('Primary', 'Active'), 1008, 40, 70, 36, []), (('Tertiary', 'Active'), 1118, 40, 70, 36, []), (('Primary', 'Focused'), 1228, 40, 70, 36, []),
-  (('Tertiary', 'Focused'), 1338, 40, 70, 36, []), (('Secundary', 'Disabled'), 1448, 40, 70, 36, []), (('Secundary', 'Hover'), 40, 120, 70, 36, []),
-  (('Secundary', 'Active'), 150, 120, 70, 36, []), (('Secundary', 'Focused'), 260, 120, 70, 36, []),
+ dict(key='button-small', cells=[
+  ('Tertiary · Default', 'Variant=Tertiary, State=Default, on Dark=False, Icon=False, Text=True, is Loading=false', '8:49', 1016, 148, 70, 36, 48, [F, O], []),
  ]),
- dict(key='button-icon', frame='180:608', fw=920, fh=128, props=['Type', 'State'], fixed={'Size': 'Md'}, cells=[
-  (('Default', 'Default'), 40, 40, 48, 48, [BGD, TXD, ERB]), (('Default', 'Disabled'), 128, 40, 48, 48, [BGD, TXD, ERB]),
-  (('Default', 'Active'), 216, 40, 48, 48, ['Backgrounds/White-Dark/color-bg-subtle', TXD, ERB, BGD]),
-  (('Default', 'Hover'), 304, 40, 48, 48, ['Backgrounds/White-Dark/color-bg-subtle-light', TXD, ERB, BGD]),
-  (('Default', 'Focus'), 392, 40, 48, 48, [BGD, 'Strokes/color-stroke-bold', TXD, ERB]),
-  (('Outline', 'Default'), 480, 40, 48, 48, [BGD, 'Strokes/color-strokes-default', TXD, ERB]),
-  (('Outline', 'Disabled'), 568, 40, 48, 48, [BGD, 'Strokes/color-strokes-default', TXD, ERB]),
-  (('Outline', 'Active'), 656, 40, 48, 48, ['Backgrounds/White-Dark/color-bg-subtle', 'Strokes/color-strokes-default', TXD, ERB, BGD]),
-  (('Outline', 'Hover'), 744, 40, 48, 48, [BGD, 'Strokes/color-stroke-secondarycolor-default', TXD, ERB]),
-  (('Outline', 'Focus'), 832, 40, 48, 48, [BGD, 'Strokes/color-stroke-bold', TXD, ERB]),
+ dict(key='button-icon', cells=[
+  ('Default · Md', 'Type=Default, State=Default, Size=Md', '8:1298', 928, 148, 48, 48, 96, [F, O, A], [BGD, TXD, 'Feedback/Error/color-error-bg-alert']),
  ]),
- dict(key='dropdown', frame='180:679', fw=1616, fh=700, props=['State'], fixed={}, cells=[
-  (('Expand',), 40, 40, 354, 478, [TXD, 'Backgrounds/White-Dark/color-bg-inputs', 'Strokes/color-strokes-default', 'Texts/color-text-subtle', BGD, 'Strokes/color-stroke-subtle', 'Backgrounds/White-Dark/color-bg-muted', 'Texts/color-text-subtle-light']),
-  (('Default',), 434, 40, 354, 102, [TXD, 'Backgrounds/White-Dark/color-bg-inputs', 'Strokes/color-strokes-default', 'Texts/color-text-subtle']),
-  (('Error',), 828, 40, 354, 102, ['Feedback/Error/color-error-text', 'Backgrounds/White-Dark/color-bg-inputs', 'Strokes/color-stroke-error', 'Texts/color-text-subtle', TXD]),
-  (('Disabled',), 1222, 40, 354, 101, ['Texts/color-text-muted', 'Backgrounds/White-Dark/color-bg-muted', 'Strokes/color-strokes-default']),
-  (('Hover',), 40, 558, 354, 102, [TXD, 'Backgrounds/White-Dark/color-bg-muted', 'Strokes/color-stroke-subtle', 'Texts/color-text-subtle']),
-  (('Focus',), 434, 558, 354, 102, [TXD, 'Backgrounds/White-Dark/color-bg-inputs', 'Strokes/color-stroke-bold', 'Texts/color-text-subtle']),
+ dict(key='chip', cells=[
+  ('Única', '—', '8:10675', 938, 332, 137, 35, 8, [F], []),
  ]),
- dict(key='input-password', frame='180:768', fw=1388, fh=852, props=['state'], fixed={'density': 'default', 'theme': 'light'}, cells=[
-  (('hovered',), 40, 40, 297, 231, []), (('error',), 377, 40, 297, 228, []), (('success',), 714, 40, 297, 228, []), (('readOnly',), 1051, 40, 297, 117, []),
-  (('prefilled',), 40, 310, 297, 117, []), (('focused',), 377, 310, 297, 231, []), (('typing',), 714, 310, 297, 231, []), (('default',), 1051, 310, 297, 231, []),
-  (('Filled',), 40, 581, 297, 231, [TXD]), (('disabled',), 377, 581, 297, 117, ['Action/color-action-text-disable']),
+ dict(key='dropdown', cells=[
+  ('Default', 'State=Default', '8:838', 40, 408, 354, 102, 96, [F, O, A], [TXD, 'Backgrounds/White-Dark/color-bg-inputs', STD, 'Texts/color-text-subtle']),
  ]),
- dict(key='input-otp', frame='180:1169', fw=1416, fh=324, props=['state'], fixed={'digits': '6'}, cells=[
-  (('error',), 40, 40, 304, 102, []), (('default',), 384, 40, 304, 102, []), (('success',), 728, 40, 304, 102, []),
-  (('typing',), 1072, 40, 304, 102, []), (('focused',), 40, 182, 304, 102, []), (('disabled',), 384, 182, 304, 102, []),
+ dict(key='input-password', cells=[
+  ('default (8:14113)', 'state=default, density=default, theme=light', '8:14113', 697, 1708, 297, 231, 12, [O, A], []),
+  ('Filled (8:14113)', 'state=Filled, density=default, theme=light', '8:14113', 1034, 1708, 297, 231, 12, [O, A], [TXD]),
+  ('default (8:1804)', 'state=default, density=default, theme=light', '8:1804', 40, 1978, 297, 231, 4, [F, O], []),
+  ('error (8:14113)', 'state=error, density=default, theme=light', '8:14113', 377, 1978, 297, 228, 4, [O, A], []),
+  ('typing (8:14113)', 'state=typing, density=default, theme=light', '8:14113', 714, 1978, 297, 231, 4, [O, A], []),
+  ('focused (8:1804)', 'state=focused, density=default, theme=light', '8:1804', 1051, 1978, 297, 231, 2, [F], []),
+  ('Filled (8:1804)', 'state=Filled, density=default, theme=light', '8:1804', 40, 2249, 297, 231, 2, [F], [TXD]),
  ]),
- dict(key='otp-cell', frame='180:1312', fw=808, fh=136, props=['state'], fixed={'size': 'md'}, cells=[
-  (('default',), 40, 40, 56, 56, []), (('filled',), 136, 40, 56, 56, []), (('focused',), 232, 40, 56, 56, []), (('hovered',), 328, 40, 56, 56, []),
-  (('typing',), 424, 40, 56, 56, []), (('disabled',), 520, 40, 56, 56, []), (('error',), 616, 40, 56, 56, ['red/700']), (('success',), 712, 40, 56, 56, []),
+ dict(key='input-otp', cells=[
+  ('default · 6 dígitos', 'state=default, digits=6', '8:9319', 353, 1708, 304, 102, 18, [F, A], []),
  ]),
- dict(key='helper-text', frame='180:1339', fw=448, fh=98, props=['type'], fixed={'theme': 'light'}, cells=[
-  (('default',), 40, 40, 81, 18, []), (('success',), 160, 40, 111, 18, []), (('error',), 311, 40, 96, 18, []),
+ dict(key='otp-cell', cells=[
+  ('default · lg', 'state=default, size=lg', '8:9240', 1120, 1236, 72, 72, 44, [F, A], []),
+  ('filled · lg', 'state=filled, size=lg', '8:9240', 1232, 1236, 72, 72, 24, [F, A], []),
+  ('success · lg', 'state=success, size=lg', '8:9240', 1344, 1236, 72, 72, 24, [F, A], []),
+  ('error · lg', 'state=error, size=lg', '8:9240', 1456, 1236, 72, 72, 12, [A], ['red/700']),
+  ('typing · lg', 'state=typing, size=lg', '8:9240', 40, 1348, 72, 72, 4, [F, A], []),
  ]),
- dict(key='requirement-list', frame='180:1350', fw=527, fh=98, props=['type'], fixed={'theme': 'light'}, cells=[
-  (('default',), 40, 40, 123, 18, []), (('success',), 202, 40, 122, 18, []), (('error',), 364, 40, 122, 18, []),
+ dict(key='helper-text', cells=[
+  ('default (8:9506)', 'type=default, theme=light', '8:9506', 1008, 1604, 81, 18, 18, [F, A], []),
+  ('default (8:9305)', 'type=default', '8:9305', 1128, 1604, 81, 18, 14, [F, A], []),
+  ('default (8:1725)', 'type=default, theme=light', '8:1725', 1248, 1604, 81, 18, 8, [F, O], []),
+  ('error (8:9305)', 'type=error', '8:9305', 1368, 1604, 96, 18, 2, [A], []),
+  ('success (8:9305)', 'type=success', '8:9305', 40, 1708, 111, 18, 2, [A], []),
  ]),
- dict(key='title-content', frame='180:1363', fw=1538, fh=180, props=['Size', 'Weight'], fixed={'on Dark': 'False', 'is Mobile': 'False', 'Centered': 'False', 'Subtitle': 'True', 'Title': 'True', 'Description': 'True', 'Link': 'False'}, cells=[
-  (('S (16)', 'Bold'), 40, 40, 174, 68, []), (('S (16)', 'Medium'), 254, 40, 174, 68, []), (('XS (14)', 'Bold'), 468, 40, 174, 58, []),
-  (('XS (14)', 'Medium'), 682, 40, 174, 58, []), (('XL (32)', 'Medium'), 896, 40, 174, 100, []), (('L (24)', 'Medium'), 1110, 40, 174, 84, []),
-  (('M (20)', 'Medium'), 1324, 40, 174, 76, []),
+ dict(key='requirement-list', cells=[
+  ('default', 'type=default, theme=light', '8:1748', 191, 1708, 123, 18, 32, [F, O], []),
  ]),
- dict(key='list', frame='180:1392', fw=1120, fh=389, props=['Sidetext', 'Actions'], fixed={'Small': 'False', 'Icon': 'True', 'Description': 'Default', 'is Loading': 'False'}, cells=[
-  (('None', 'Two'), 40, 40, 500, 46, []), (('None', 'One'), 580, 40, 500, 46, []), (('w/ Description', 'None'), 40, 126, 500, 46, []),
-  (('w/ Badge', 'None'), 580, 126, 500, 51, []), (('w/ Badge Inline', 'None'), 40, 216, 500, 46, []), (('Badge Only', 'None'), 580, 216, 500, 46, []),
-  (('Default', 'None'), 40, 302, 500, 46, []), (('None', 'None'), 580, 302, 500, 46, []),
+ dict(key='checkmark', cells=[
+  ('Default (Larger)', 'State=Default (Larger)', '8:2465', 468, 1604, 24, 24, 20, [F, O, A], []),
+  ('Selected (Larger)', 'State=Selected (Larger)', '8:2465', 532, 1604, 24, 24, 6, [O, A], []),
  ]),
- dict(key='card', frame='180:1675', fw=976, fh=224, props=['is Elevated', 'has Padding'], fixed={}, cells=[
-  (('False', 'True'), 40, 40, 194, 144, []), (('False', 'False'), 274, 40, 194, 112, []), (('True', 'True'), 508, 40, 194, 144, []), (('True', 'False'), 742, 40, 194, 112, []),
+ dict(key='radio', cells=[
+  ('No seleccionado · Default', 'is Selected=No, State=Default, is Disabled=No', '8:2428', 632, 1460, 24, 24, 8, [F, O], []),
  ]),
- dict(key='divider', frame='180:1740', fw=321, fh=120, props=['is Horizontal', 'Full width'], fixed={}, cells=[
-  (('True', 'No'), 40, 40, 40, 1, []), (('True', 'Padding 24'), 120, 40, 40, 1, []), (('False', 'No'), 200, 40, 1, 40, []), (('True', 'Padding 16'), 241, 40, 40, 1, []),
+ dict(key='title-content', cells=[
+  ('XS (14) · solo descripción (8:2495)', 'on Dark=False, is Mobile=False, Size=XS (14), Weight=Medium, Centered=False, Subtitle=False, Title=False, Description=True, Link=False', '8:2495', 806, 1460, 174, 16, 123, TODAS, []),
+  ('XS (14) · solo título (8:3384)', 'on Dark=False, is Mobile=False, Size=XS (14), Weight=Medium, Centered=False, Subtitle=False, Title=True, Description=False, Link=False', '8:3384', 1020, 1460, 174, 20, 123, TODAS, []),
+  ('L (24) · centrado · título y descripción (8:3384)', 'on Dark=False, is Mobile=False, Size=L (24), Weight=Medium, Centered=True, Subtitle=False, Title=True, Description=True, Link=False', '8:3384', 1234, 1460, 174, 60, 24, TODAS, []),
+  ('L (24) · móvil · centrado · título y descripción (8:4298)', 'on Dark=False, is Mobile=True, Size=L (24), Weight=Medium, Centered=True, Subtitle=False, Title=True, Description=True, Link=False', '8:4298', 40, 1604, 174, 52, 24, TODAS, []),
+  ('XS (14) · solo descripción (8:4298)', 'on Dark=False, is Mobile=False, Size=XS (14), Weight=Medium, Centered=False, Subtitle=False, Title=False, Description=True, Link=False', '8:4298', 254, 1604, 174, 16, 12, [O, A], []),
  ]),
- dict(key='checkmark', frame='180:1747', fw=168, fh=104, props=['State'], fixed={}, cells=[
-  (('Default (Larger)',), 40, 40, 24, 24, []), (('Selected (Larger)',), 104, 40, 24, 24, []),
+ dict(key='list', cells=[
+  ('Small · ícono · una acción (8:7251)', 'Small=True, Icon=True, Description=None, Sidetext=None, Actions=One, is Loading=False', '8:7251', 40, 1070, 500, 40, 45, TODAS, []),
+  ('Small · ícono · descripción · una acción (8:8017)', 'Small=True, Icon=True, Description=Default, Sidetext=None, Actions=One, is Loading=False', '8:8017', 580, 1070, 500, 40, 19, TODAS, []),
+  ('Small · ícono (8:13041)', 'Small=True, Icon=True, Description=None, Sidetext=None, Actions=None, is Loading=False', '8:13041', 40, 1150, 500, 40, 18, [O, A], []),
+  ('ícono · descripción (8:7251)', 'Small=False, Icon=True, Description=Default, Sidetext=None, Actions=None, is Loading=False', '8:7251', 580, 1150, 500, 46, 12, [O, A], []),
+  ('ícono (8:11627)', 'Small=False, Icon=True, Description=None, Sidetext=None, Actions=None, is Loading=False', '8:11627', 40, 1236, 500, 40, 8, [O, A], []),
+  ('sin ícono · descripción (8:13041)', 'Small=False, Icon=False, Description=Default, Sidetext=None, Actions=None, is Loading=False', '8:13041', 580, 1236, 500, 46, 6, [O, A], []),
  ]),
- dict(key='radio', frame='180:1754', fw=552, fh=104, props=['is Selected', 'State', 'is Disabled'], fixed={}, cells=[
-  (('Yes', 'Focus', 'No'), 40, 40, 24, 24, []), (('Yes', 'Hover', 'No'), 104, 40, 24, 24, []), (('No', 'Focus', 'No'), 168, 40, 24, 24, []),
-  (('No', 'Hover', 'No'), 232, 40, 24, 24, []), (('No', 'Default', 'No'), 296, 40, 24, 24, []), (('No', 'Default', 'Yes'), 360, 40, 24, 24, []),
-  (('Yes', 'Default', 'No'), 424, 40, 24, 24, []), (('Yes', 'Default', 'Yes'), 488, 40, 24, 24, []),
+ dict(key='card', cells=[
+  ('Sin elevación · con padding (8:7984)', 'is Elevated=False, has Padding=True', '8:7984', 1126, 148, 194, 144, 19, TODAS, []),
+  ('Sin elevación · con padding (8:9182)', 'is Elevated=False, has Padding=True', '8:9182', 1360, 148, 194, 144, 13, TODAS, []),
  ]),
- dict(key='badges', frame='180:1803', fw=1536, fh=169, props=['Type', 'State'], fixed={'Size': 'Medium'}, cells=[
-  (('Text', 'Default'), 40, 40, 80, 25, []), (('Text', 'Info'), 160, 40, 80, 25, []), (('Text', 'Success'), 280, 40, 80, 25, []),
-  (('Text', 'Error'), 400, 40, 80, 25, []), (('Text', 'Warning'), 520, 40, 80, 25, []), (('with Icon', 'Default'), 640, 40, 104, 25, []),
-  (('Icon', 'Default'), 784, 40, 24, 24, []), (('Icon', 'Info'), 848, 40, 24, 24, []), (('Icon', 'Success'), 912, 40, 24, 24, []),
-  (('Icon', 'Error'), 976, 40, 24, 24, []), (('Icon', 'Warning'), 1040, 40, 24, 24, []), (('with Icon', 'Info'), 1104, 40, 104, 25, []),
-  (('with Icon', 'Success'), 1248, 40, 104, 25, []), (('with Icon', 'Error'), 1392, 40, 104, 25, []), (('with Icon', 'Warning'), 40, 104, 104, 25, []),
+ dict(key='card-footer', cells=[
+  ('Default', 'Type=Default', '8:2387', 40, 40, 277, 68, 48, [F, O], []),
  ]),
- dict(key='pills', frame='180:1936', fw=416, fh=100, props=['Type'], fixed={}, cells=[
-  (('Base pill removable',), 40, 40, 54, 20, []), (('Base pill',), 134, 40, 30, 20, []), (('Base pill icon removable',), 204, 40, 78, 20, []), (('Base pill icon',), 322, 40, 54, 20, []),
+ dict(key='group-heading', cells=[
+  ('Section · 1 acción', 'Type=Section, Actions=1, is Mobile=False', '8:13994', 40, 332, 858, 36, 6, [O, A], []),
  ]),
- dict(key='spinner', frame='180:1961', fw=232, fh=104, props=['State'], fixed={'Over': 'Light'}, cells=[
-  (('Base spinner',), 40, 40, 24, 24, ['Strokes/color-strokes-primarycolor-default']), (('State4',), 104, 40, 24, 24, ['Strokes/color-strokes-primarycolor-default']),
-  (('State3',), 168, 40, 24, 24, ['Strokes/color-strokes-primarycolor-default']),
+ dict(key='divider', cells=[
+  ('Horizontal (8:6810)', 'is Horizontal=True, Full width=No', '8:6810', 1115, 332, 40, 1, 56, TODAS, []),
+  ('Horizontal (8:45)', 'is Horizontal=True, Full width=No', '8:45', 1195, 332, 40, 1, 48, [F, O], []),
+  ('Horizontal · padding 24 (8:45)', 'is Horizontal=True, Full width=Padding 24', '8:45', 1275, 332, 40, 1, 6, [O, A], []),
+  ('Horizontal · padding 24 (8:6810)', 'is Horizontal=True, Full width=Padding 24', '8:6810', 1355, 332, 40, 1, 6, [O, A], []),
  ]),
- dict(key='avatar', frame='180:1998', fw=1600, fh=144, props=['Type', 'Color'], fixed={'is Circle': 'Yes', 'has Badge': 'No', 'has Dot': 'No', 'Size': 'Medium', 'isLoading': 'False'}, cells=[
-  (('Text', 'Highlight'), 40, 40, 64, 64, ['Color/Primitives/Primary/primary95', 'Color/Primitives/Primary/primary50']),
-  (('Text', 'Success'), 144, 40, 64, 64, ['Color/Primitives/Success/success98', 'Color/States/Success/color-on-success']),
-  (('Text', 'Error'), 248, 40, 64, 64, ['Color/States/Error/color-error', 'Color/States/Error/color-on-error']),
-  (('Text', 'Info'), 352, 40, 64, 64, ['Color/States/Info/color-info', 'Color/States/Info/color-on-info']),
-  (('Text', 'Warning'), 456, 40, 64, 64, ['Color/States/Warning/color-warning', 'Color/States/Warning/color-on-warning']),
-  (('Text', 'White'), 560, 40, 64, 64, ['Color/Primitives/Neutral/neutral98', 'Color/Primitives/Neutral/neutral95', 'Color/Primitives/Primary/primary60']),
-  (('Text', 'Default'), 664, 40, 64, 64, ['Color/Surface/color-surface-lowest', N20]),
-  (('Icon', 'Highlight'), 768, 40, 64, 64, ['Color/Primitives/Primary/primary95', 'Color/Primitives/Primary/primary50']),
-  (('Icon', 'Success'), 872, 40, 64, 64, ['Color/Primitives/Success/success98', 'Color/States/Success/color-on-success']),
-  (('Icon', 'Error'), 976, 40, 64, 64, ['Color/States/Error/color-error', 'Color/States/Error/color-on-error']),
-  (('Icon', 'Info'), 1080, 40, 64, 64, ['Color/States/Info/color-info', 'Color/States/Info/color-on-info']),
-  (('Icon', 'Warning'), 1184, 40, 64, 64, ['Color/States/Warning/color-warning', 'Color/States/Warning/color-on-warning']),
-  (('Icon', 'White'), 1288, 40, 64, 64, ['Color/Primitives/Neutral/neutral98', 'Color/Primitives/Neutral/neutral95', 'Color/Primitives/Primary/primary60']),
-  (('Icon', 'Default'), 1392, 40, 64, 64, ['Color/Surface/color-surface-lowest', N20]),
-  (('Image', 'Image'), 1496, 40, 64, 64, ['Color/Primitives/Neutral/neutral95']),
+ dict(key='reading-progress', cells=[
+  ('Sin leer', 'Estado=Sin leer', '8:28628', 152, 1348, 552, 56, 2, [F], ['bg/default', 'bg/muted', 'text/primary', 'text/secondary']),
+  ('En progreso', 'Estado=En progreso', '8:28628', 744, 1348, 552, 56, 1, [F], ['bg/default', 'bg/muted', 'text/primary', 'text/secondary', 'brand/default']),
+  ('Completo', 'Estado=Completo', '8:28628', 40, 1460, 552, 56, 1, [F], ['feedback/success-bg', 'bg/muted', 'feedback/success-icon', 'text/primary', 'bg/subtle', 'brand/default']),
  ]),
- dict(key='tooltip', frame='180:2057', fw=452, fh=144, props=[], fixed={}, cells=[((), 40, 40, 372, 64, [])]),
- dict(key='chip', frame='180:2070', fw=217, fh=115, props=[], fixed={}, cells=[((), 40, 40, 137, 35, [])]),
- dict(key='scrollbar', frame='180:2075', fw=230, fh=184, props=['Orientation'], fixed={}, cells=[(('Horizontal',), 40, 40, 104, 6, []), (('Vertical',), 184, 40, 6, 104, [])]),
- dict(key='icon-container', frame='180:2080', fw=232, fh=112, props=['Size'], fixed={}, cells=[
-  (('Medium - 24px',), 40, 40, 24, 24, []), (('Large - 32px',), 104, 40, 32, 32, []), (('Small - 16px',), 176, 40, 16, 16, []),
+ dict(key='badges', cells=[
+  ('Text · Info · Large', 'Type=Text, State=Info, Size=Large', '8:76', 565, 40, 106, 37, 8, [O, A], []),
  ]),
- dict(key='reading-progress', frame='180:2092', fw=1224, fh=232, props=['Estado'], fixed={}, cells=[
-  (('Sin leer',), 40, 40, 552, 56, ['bg/default', 'bg/muted', 'text/primary', 'text/secondary']),
-  (('En progreso',), 632, 40, 552, 56, ['bg/default', 'bg/muted', 'text/primary', 'text/secondary', 'brand/default']),
-  (('Completo',), 40, 136, 552, 56, ['feedback/success-bg', 'bg/muted', 'feedback/success-icon', 'text/primary', 'bg/subtle', 'brand/default']),
+ dict(key='badge-success', cells=[
+  ('Única', '—', '8:2418', 711, 40, 104, 25, 48, [F, O], []),
  ]),
- dict(key='group-heading', frame='180:2133', fw=938, fh=648, props=['Type', 'Actions'], fixed={'is Mobile': 'False'}, cells=[
-  (('Section', '1'), 40, 40, 858, 36, []), (('Pills', '4'), 40, 116, 858, 36, []), (('Pills', '3'), 40, 192, 858, 36, []), (('Pills', '2'), 40, 268, 858, 36, []),
-  (('Filter', '4'), 40, 344, 858, 36, []), (('Filter', '3'), 40, 420, 858, 36, []), (('Filter', '2'), 40, 496, 858, 36, []), (('Filter', '1'), 40, 572, 858, 36, []),
+ dict(key='pills', cells=[
+  ('Base pill', 'Type=Base pill', '8:2448', 855, 40, 30, 20, 8, [F, O], []),
+ ]),
+ dict(key='spinner', cells=[
+  ('Base spinner · Light', 'State=Base spinner, Over=Light', '8:4285', 742, 1460, 24, 24, 2, [F], ['Strokes/color-strokes-primarycolor-default']),
+ ]),
+ dict(key='tooltip', cells=[
+  ('Única', '—', '8:10667', 596, 1604, 372, 64, 3, [F], []),
+ ]),
+ dict(key='avatar', cells=[
+  ('Icon · Error · circular (8:10151)', 'Type=Icon, Color=Error, is Circle=Yes, has Badge=No, has Dot=No, Size=Medium, isLoading=False', '8:10151', 357, 40, 64, 64, 12, [F, O, E], ['Color/States/Error/color-error', 'Color/States/Error/color-on-error']),
+  ('Icon · Default · cuadrado (8:5327)', 'Type=Icon, Color=Default, is Circle=No, has Badge=No, has Dot=No, Size=Medium, isLoading=False', '8:5327', 461, 40, 64, 64, 6, [O, A], []),
+ ]),
+ dict(key='icon-container', cells=[
+  ('Medium · 24 px', 'Size=Medium - 24px', '8:1454', 434, 408, 24, 24, 24, [F, O, A], []),
+ ]),
+ dict(key='scrollbar', cells=[
+  ('Vertical', 'Orientation=Vertical', '8:10775', 696, 1460, 6, 104, 8, [O, A], []),
+ ]),
+ dict(key='illustration', cells=[
+  ('Design 4', 'Design=4', '8:248', 40, 550, 1128, 480, 260, TODAS, ['Primary/PR500', 'DarkOverlayElement/DO40', 'DarkOverlayElement/DO60', 'PrimaryAlpha/PRA10', 'DarkOverlayElement/DO20', 'DarkOverlayElement/100']),
  ]),
 ]
 
-# Información de cada componente (nombre, descripción y propiedades tal como están en Figma).
+# Nombre, descripción y total de variantes del set tal como están en Figma.
+# total: variantes del set principal (None si no aplica o no se midió).
+META_EXTRA = {
+ 'card-footer': dict(name='.cardFooter', group='Contenido', total=None, desc='', props={}),
+ 'badge-success': dict(name='Badges/Medium/Success/with Icon/Bottom Rounded', group='Estado y feedback', total=1, desc='', props={}),
+ 'illustration': dict(name='Img lib/Ilustration graph, icon', group='Otros', total=None, desc='', props={}),
+}
+
+# Información de cada componente tal como está en Figma (nombre, descripción, total de variantes del set principal y propiedades).
 META = {
  'button': dict(name='Button', group='Acciones', total=254, desc='Para armado de flujos utilizamos Button Row', props={'Variant': ['Primary', 'Outline', 'Black', 'None', 'Alt', 'Ghost'], 'State': ['Default', 'Disabled', 'Hover', 'Skeleton', 'Loading', 'inProgress', 'Active', 'Focused'], 'Size': ['Large', 'Small', 'Medium'], 'on Dark': ['False', 'True'], 'has Text': ['True', 'False'], 'Show Icon Left': 'BOOLEAN', 'Show Icon Right': 'BOOLEAN'}),
  'button-small': dict(name='Button/Small', group='Acciones', total=105, desc='Botón pequeño. Se utilizará dentro de elementos que requieren un accionable pero puedan ser leídos en segunda jerarquía.', props={'Variant': ['Primary', 'Secundary', 'Tertiary'], 'State': ['Default', 'Loading', 'Disabled', 'Hover', 'Progress', 'Active', 'Focused'], 'on Dark': ['False', 'True'], 'Icon': ['False', 'True'], 'Text': ['True', 'False'], 'is Loading': ['false', 'true']}),
@@ -197,3 +177,4 @@ META = {
  'icon-container': dict(name='Icon container', group='Otros', total=3, desc='Reemplazar el icono interno de este contenedor.', props={'Size': ['Small - 16px', 'Medium - 24px', 'Large - 32px']}),
  'scrollbar': dict(name='Scrollbar', group='Otros', total=2, desc='', props={'Orientation': ['Horizontal', 'Vertical']}),
 }
+META.update(META_EXTRA)

@@ -336,6 +336,10 @@ td.wrap{white-space:normal}
 .figgrid figcaption{font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary);padding:var(--sp-2) var(--sp-3);border-top:1px solid var(--stroke-subtle);background:var(--bg-surface)}
 .varchips{display:flex;flex-wrap:wrap;gap:var(--sp-1);margin-top:var(--sp-3);font-size:var(--font-size-12);color:var(--text-tertiary);align-items:center}
 .varchips code{font-size:11px}
+.figinfo p{margin:0 0 var(--sp-2)}
+.figinfo code{font-size:12px;white-space:normal;word-break:break-word}
+.figgrid figcaption{display:flex;flex-direction:column;gap:2px}
+.figgrid figcaption .uso{color:var(--text-tertiary)}
 /* ═════ Responsive ═════ */
 @media (max-width:1180px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -1348,7 +1352,7 @@ function initFig(root) {
     cur = Object.assign({}, best.vp);
     sels.forEach(function (sel) { sel.value = cur[sel.dataset.p]; });
     var img = $('.fig-stage img', root); img.src = best.f; img.width = best.w; img.height = best.h;
-    $('.figinfo', root).textContent = exact ? '' : 'Esa combinación no está entre las exportadas: se muestra la más cercana.';
+    $('.figinfo', root).innerHTML = '<p>' + esc(best.uso) + '</p>' + (best.figp === '—' ? '<p class="muted">Este componente no tiene variantes en Figma.</p>' : '<p class="muted">Propiedades en Figma</p><p><code>' + esc(best.figp) + '</code></p>');
     $('.varchips', root).innerHTML = best.vars.length ? 'Variables vinculadas en Figma: ' + best.vars.map(function (v) { return '<code>' + esc(v) + '</code>'; }).join(' ') : '';
   }
   pick(null);

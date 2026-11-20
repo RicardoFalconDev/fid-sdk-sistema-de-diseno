@@ -32,46 +32,73 @@ sys.path.insert(0, str(HERE))
 from componentes_figma import SHEETS, META
 
 FIG_PAGES = [
-    ('c-acciones', 'Acciones', 'Botones y acciones, tal como están en Figma.', ['button', 'button-small', 'button-icon', 'chip']),
-    ('c-formularios', 'Formularios', 'Campos, códigos, ayudas y selección, tal como están en Figma.', ['dropdown', 'input-password', 'input-otp', 'otp-cell', 'helper-text', 'requirement-list', 'checkmark', 'radio']),
-    ('c-contenido', 'Contenido', 'Títulos, listas, tarjetas y separadores, tal como están en Figma.', ['title-content', 'list', 'card', 'group-heading', 'divider', 'reading-progress']),
-    ('c-estado', 'Estado y feedback', 'Badges, pills, spinner y tooltip, tal como están en Figma.', ['badges', 'pills', 'spinner', 'tooltip']),
-    ('c-otros', 'Otros', 'Avatar, contenedor de ícono y scrollbar, tal como están en Figma.', ['avatar', 'icon-container', 'scrollbar']),
+    ('c-acciones', 'Acciones', 'Los botones y acciones que usan las pantallas del SDK, tal como están en Figma.', ['button', 'button-small', 'button-icon', 'chip']),
+    ('c-formularios', 'Formularios', 'Los campos, códigos, ayudas y controles de selección que usan las pantallas del SDK.', ['dropdown', 'input-password', 'input-otp', 'otp-cell', 'helper-text', 'requirement-list', 'checkmark', 'radio']),
+    ('c-contenido', 'Contenido', 'Los títulos, listas, tarjetas y separadores que usan las pantallas del SDK.', ['title-content', 'list', 'card', 'card-footer', 'group-heading', 'divider', 'reading-progress']),
+    ('c-estado', 'Estado y feedback', 'Los badges, pills, spinner y tooltip que usan las pantallas del SDK.', ['badges', 'badge-success', 'pills', 'spinner', 'tooltip']),
+    ('c-otros', 'Otros', 'Avatar, contenedor de ícono, scrollbar e ilustración, tal como los usan las pantallas del SDK.', ['avatar', 'icon-container', 'scrollbar', 'illustration']),
 ]
-PTYPE = {'BOOLEAN': 'Sí / No', 'TEXT': 'Texto', 'INSTANCE_SWAP': 'Intercambio de instancia'}
+
+
+def lista(xs):
+    xs = list(xs)
+    return xs[0] if len(xs) == 1 else ', '.join(xs[:-1]) + ' y ' + xs[-1]
+
+
+def uso(n, secs):
+    return 'Se usa %d %s en %s.' % (n, 'vez' if n == 1 else 'veces', lista(secs))
+
+
 fig = {}
 for s in SHEETS:
-    fig[s['key']] = {'props': s['props'], 'cells': [{'vp': dict(zip(s['props'], vp)), 'f': 'componentes/%s-%02d.png' % (s['key'], i), 'w': w + 36, 'h': h + 36, 'vars': v} for i, (vp, x, y, w, h, v) in enumerate(s['cells'])]}
+    fig[s['key']] = {'props': ['Variante'], 'cells': [
+        {'vp': {'Variante': lbl}, 'f': 'componentes/%s-%02d.png' % (s['key'], i), 'w': w + 18, 'h': h + 18,
+         'vars': v, 'figp': fp, 'set': st, 'uso': uso(n, secs)}
+        for i, (lbl, fp, st, x, y, w, h, n, secs, v) in enumerate(s['cells'])]}
 SH = {s['key']: s for s in SHEETS}
 
 
 def fig_section(key):
     m, s, d = META[key], SH[key], fig[key]
     e = lambda t: html.escape(str(t))
+    cells = d['cells']
+    sets = []
+    for c in s['cells']:
+        if c[2] not in sets:
+            sets.append(c[2])
+    total_usos = sum(c[7] for c in s['cells'])
     h = ['<h2 id="fig-%s">%s</h2>' % (key, e(m['name']))]
     if m['desc']:
         h.append('<p>%s</p>' % e(m['desc']))
-    fixed = ', '.join('%s = %s' % (k, v) for k, v in s['fixed'].items())
-    h.append('<p class="small muted">%d %s en Figma. Acá se muestran %d%s.</p>' % (m['total'], 'variante' if m['total'] == 1 else 'variantes', len(d['cells']), (' (con ' + e(fixed) + ')') if fixed else ''))
-    first = d['cells'][0]
-    ctrls = ''.join('<div class="ctrl"><label>%s</label><select data-p="%s"></select></div>' % (e(p), e(p)) for p in s['props'])
-    h.append('<div class="live figlive" data-fig="%s"><div>%s<p class="small muted figinfo"></p></div><div><div class="fig-stage"><img alt="%s" src="%s" width="%d" height="%d"></div><div class="varchips"></div></div></div>' % (key, ctrls or '<p class="small muted">Este componente no tiene variantes.</p>', e(m['name']), first['f'], first['w'], first['h']))
-    if len(d['cells']) > 1:
-        h.append('<h3 id="fig-%s-var">Variantes</h3><div class="figgrid">' % key)
-        for c in d['cells']:
-            lbl = ' · '.join(c['vp'].values())
-            h.append('<figure><div class="im"><img loading="lazy" alt="%s %s" src="%s" width="%d" height="%d"></div><figcaption>%s</figcaption></figure>' % (e(m['name']), e(lbl), c['f'], c['w'], c['h'], e(lbl)))
+    nv = len(cells)
+    if len(sets) == 1:
+        if m.get('total') and m['total'] > 1:
+            linea = 'Las pantallas usan %d de las %d variantes del componente (%d instancias en total).' % (nv, m['total'], total_usos)
+        else:
+            linea = ''
+    else:
+        linea = 'Las pantallas usan %d %s (%d instancias en total), que salen de %d versiones distintas de este componente en la librería (%s). Son sets separados: conviene unificarlos.' % (nv, 'variante' if nv == 1 else 'variantes', total_usos, len(sets), ', '.join(sets))
+    if linea:
+        h.append('<p class="small muted">%s</p>' % e(linea))
+    first = cells[0]
+    if nv > 1:
+        ctrl = '<div class="ctrl"><label>Variante</label><select data-p="Variante"></select></div>'
+    else:
+        ctrl = ''
+    h.append('<div class="live figlive" data-fig="%s"><div>%s<div class="figinfo small"></div></div><div><div class="fig-stage"><img alt="%s" src="%s" width="%d" height="%d"></div><div class="varchips"></div></div></div>' % (key, ctrl, e(m['name']), first['f'], first['w'], first['h']))
+    if nv > 1:
+        h.append('<h3 id="fig-%s-var">Variantes que se usan</h3><div class="figgrid">' % key)
+        for c in cells:
+            lbl = c['vp']['Variante']
+            h.append('<figure><div class="im"><img loading="lazy" alt="%s %s" src="%s" width="%d" height="%d"></div><figcaption><span>%s</span><span class="uso">%s</span></figcaption></figure>' % (e(m['name']), e(lbl), c['f'], c['w'], c['h'], e(lbl), e(c['uso'])))
         h.append('</div>')
-    if m['props']:
-        rows = ''.join('<tr><td><code>%s</code></td><td>%s</td><td class="wrap">%s</td></tr>' % (e(k), 'Variante' if isinstance(v, list) else PTYPE.get(v, v), e(', '.join(v)) if isinstance(v, list) else '—') for k, v in m['props'].items())
-        h.append('<h3 id="fig-%s-props">Propiedades en Figma</h3><div class="tablewrap"><table><thead><tr><th>Propiedad</th><th>Tipo</th><th>Valores</th></tr></thead><tbody>%s</tbody></table></div>' % (key, rows))
     return '\n'.join(h)
 
 
 fig_pages = []
 for pid, title, desc, keys in FIG_PAGES:
     body = ''.join('\n' + fig_section(k) for k in keys)
-    fig_pages.append('<section class="page" id="pg-%s" data-title="%s" data-g="Componentes" data-desc="%s" hidden>\n <div class="panel" data-tab="resumen" data-label="Resumen">\n<div class="note"><b>Tal cual está en Figma</b>Cada imagen se exportó de los componentes de la librería que usan las pantallas del SDK (archivo “FID SDK — Variables”, página Flujo), así que no hay diferencias con el diseño. Elegí las propiedades para ver cada variante; abajo están todas las exportadas y la lista completa de propiedades.</div>%s\n </div>\n</section>\n' % (pid, html.escape(title), html.escape(desc), body))
+    fig_pages.append('<section class="page" id="pg-%s" data-title="%s" data-g="Componentes" data-desc="%s" hidden>\n <div class="panel" data-tab="resumen" data-label="Resumen">\n<div class="note"><b>Solo lo que usan las pantallas</b>Cada imagen se exportó de Figma (archivo “FID SDK — Variables”, página Flujo) y muestra solo las variantes que las pantallas del SDK usan directamente; las que no aparecen en ninguna pantalla no están acá. No se incluyen los íconos sueltos ni los placeholders de imagen.</div>%s\n </div>\n</section>\n' % (pid, html.escape(title), html.escape(desc), body))
 FIG_HTML = ''.join(fig_pages)
 md = read(PKG / 'DESIGN.md')
 tokens = json.loads(read(PKG / 'tokens.json'))
