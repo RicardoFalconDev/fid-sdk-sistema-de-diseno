@@ -27,81 +27,54 @@ SHADOWS = [
 
 read = lambda p: Path(p).read_text(encoding='utf-8')
 
-# ── Componentes exportados de Figma (ver componentes_figma.py) ──
+# ── Pantallas del SDK con sus tokens (ver pantallas_tokens.py); se arma después de leer tokens.json ──
 sys.path.insert(0, str(HERE))
-from componentes_figma import SHEETS, META
-
-FIG_PAGES = [
-    ('c-acciones', 'Acciones', 'Los botones y acciones que usan las pantallas del SDK, tal como están en Figma.', ['button', 'button-small', 'button-icon', 'chip']),
-    ('c-formularios', 'Formularios', 'Los campos, códigos, ayudas y controles de selección que usan las pantallas del SDK.', ['dropdown', 'input-password', 'input-otp', 'otp-cell', 'helper-text', 'requirement-list', 'checkmark', 'radio']),
-    ('c-contenido', 'Contenido', 'Los títulos, listas, tarjetas y separadores que usan las pantallas del SDK.', ['title-content', 'list', 'card', 'card-footer', 'group-heading', 'divider', 'reading-progress']),
-    ('c-estado', 'Estado y feedback', 'Los badges, pills, spinner y tooltip que usan las pantallas del SDK.', ['badges', 'badge-success', 'pills', 'spinner', 'tooltip']),
-    ('c-otros', 'Otros', 'Avatar, contenedor de ícono, scrollbar e ilustración, tal como los usan las pantallas del SDK.', ['avatar', 'icon-container', 'scrollbar', 'illustration']),
-]
+from pantallas_tokens import SCREENS
+md = read(PKG / 'DESIGN.md')
+tokens = json.loads(read(PKG / 'tokens.json'))
 
 
-def lista(xs):
-    xs = list(xs)
-    return xs[0] if len(xs) == 1 else ', '.join(xs[:-1]) + ' y ' + xs[-1]
+def tk_val(name, d=None):
+    d = tokens if d is None else d
+    if isinstance(d, dict):
+        if name in d and not isinstance(d[name], dict):
+            return str(d[name])
+        if name in d and isinstance(d[name], dict) and 'value' in d[name]:
+            return str(d[name]['value'])
+        for v in d.values():
+            r = tk_val(name, v)
+            if r:
+                return r
+    return ''
 
 
-def uso(n, secs):
-    return 'Se usa %d %s en %s.' % (n, 'vez' if n == 1 else 'veces', lista(secs))
+def tk_corto(name):
+    v = tk_val(name)
+    return v.split(',')[0].strip().strip("'\"") if ',' in v else v
 
 
-fig = {}
-for s in SHEETS:
-    fig[s['key']] = {'props': ['Variante'], 'cells': [
-        {'vp': {'Variante': lbl}, 'f': 'componentes/%s-%02d.png' % (s['key'], i), 'w': w + 18, 'h': h + 18,
-         'vars': v, 'figp': fp, 'set': st, 'uso': uso(n, secs)}
-        for i, (lbl, fp, st, x, y, w, h, n, secs, v) in enumerate(s['cells'])]}
-SH = {s['key']: s for s in SHEETS}
-
-
-def fig_section(key):
-    m, s, d = META[key], SH[key], fig[key]
+def pantallas_page():
     e = lambda t: html.escape(str(t))
-    cells = d['cells']
-    sets = []
-    for c in s['cells']:
-        if c[2] not in sets:
-            sets.append(c[2])
-    total_usos = sum(c[7] for c in s['cells'])
-    h = ['<h2 id="fig-%s">%s</h2>' % (key, e(m['name']))]
-    if m['desc']:
-        h.append('<p>%s</p>' % e(m['desc']))
-    nv = len(cells)
-    if len(sets) == 1:
-        if m.get('total') and m['total'] > 1:
-            linea = 'Las pantallas usan %d de las %d variantes del componente (%d instancias en total).' % (nv, m['total'], total_usos)
-        else:
-            linea = ''
-    else:
-        linea = 'Las pantallas usan %d %s (%d instancias en total), que salen de %d versiones distintas de este componente en la librería (%s). Son sets separados: conviene unificarlos.' % (nv, 'variante' if nv == 1 else 'variantes', total_usos, len(sets), ', '.join(sets))
-    if linea:
-        h.append('<p class="small muted">%s</p>' % e(linea))
-    first = cells[0]
-    if nv > 1:
-        ctrl = '<div class="ctrl"><label>Variante</label><select data-p="Variante"></select></div>'
-    else:
-        ctrl = ''
-    h.append('<div class="live figlive" data-fig="%s"><div>%s<div class="figinfo small"></div></div><div><div class="fig-stage"><img alt="%s" src="%s" width="%d" height="%d"></div><div class="varchips"></div></div></div>' % (key, ctrl, e(m['name']), first['f'], first['w'], first['h']))
-    if nv > 1:
-        h.append('<h3 id="fig-%s-var">Variantes que se usan</h3><div class="figgrid">' % key)
-        for c in cells:
-            lbl = c['vp']['Variante']
-            h.append('<figure><div class="im"><img loading="lazy" alt="%s %s" src="%s" width="%d" height="%d"></div><figcaption><span>%s</span><span class="uso">%s</span></figcaption></figure>' % (e(m['name']), e(lbl), c['f'], c['w'], c['h'], e(lbl), e(c['uso'])))
-        h.append('</div>')
+    h = ['<section class="page" id="pg-pantallas" data-title="Tokens en las pantallas" data-g="Componentes" data-desc="Pantallas reales del SDK, exportadas de Figma, con el token que se aplica en cada parte." hidden>',
+         ' <div class="panel" data-tab="resumen" data-label="Resumen">',
+         '<p>Cada pantalla sale tal cual de Figma (archivo “FID SDK — Variables”, página Flujo). Pasá el mouse por una parte de la pantalla o por la lista para ver qué token la pinta. Los tokens son los del paquete (<code>DESIGN.md</code>), que es lo que tenés que usar en código.</p>',
+         '<div class="note"><b>Los componentes de Figma todavía usan variables viejas</b>En Figma, los componentes de estas pantallas siguen vinculados a variables de la librería anterior (por ejemplo <code>Primitves/brand/700 main</code>). Para código, usá los tokens de esta página.</div>']
+    for s in SCREENS:
+        h.append('<h2 id="pt-%s">%s</h2>' % (s['key'], e(s['title'])))
+        h.append('<p>%s <span class="muted small">Figma: %s.</span></p>' % (e(s['desc']), e(s['seccion'])))
+        spots, items = [], []
+        for n, (t, (x, y, w, hh), toks, marca, nota) in enumerate(s['spots'], 1):
+            st = 'left:%.3f%%;top:%.3f%%;width:%.3f%%;height:%.3f%%' % (x / s['w'] * 100, y / s['h'] * 100, w / s['w'] * 100, hh / s['h'] * 100)
+            big = ' big' if w >= s['w'] * 0.6 else ''
+            spots.append('<button type="button" class="spot%s" data-n="%d" style="%s" aria-label="%s"><span>%d</span></button>' % (big, n, st, e(t), n))
+            chips = ''.join('<span class="tk"><code>%s</code>%s</span>' % (e(k), (' <small>%s</small>' % e(tk_corto(k)) if tk_val(k) else '')) for k in toks)
+            items.append('<li data-n="%d" tabindex="0"><span class="num">%d</span><div><b>%s</b>%s<p>%s</p><div class="tks">%s</div></div></li>' % (n, n, e(t), ' <span class="tag">Sigue la marca</span>' if marca else '', e(nota), chips))
+        h.append('<div class="ptwrap"><div class="ptimg"><img src="pantallas/%s.png" alt="Pantalla %s" width="%d" height="%d" loading="lazy">%s</div><ol class="ptlist">%s</ol></div>' % (s['key'], e(s['title']), s['w'], s['h'], ''.join(spots), ''.join(items)))
+    h.append(' </div>\n</section>\n')
     return '\n'.join(h)
 
 
-fig_pages = []
-for pid, title, desc, keys in FIG_PAGES:
-    body = ''.join('\n' + fig_section(k) for k in keys)
-    fig_pages.append('<section class="page" id="pg-%s" data-title="%s" data-g="Componentes" data-desc="%s" hidden>\n <div class="panel" data-tab="resumen" data-label="Resumen">\n<div class="note"><b>Solo lo que usan las pantallas</b>Cada imagen se exportó de Figma (archivo “FID SDK — Variables”, página Flujo) y muestra solo las variantes que las pantallas del SDK usan directamente; las que no aparecen en ninguna pantalla no están acá. No se incluyen los íconos sueltos ni los placeholders de imagen.</div>%s\n </div>\n</section>\n' % (pid, html.escape(title), html.escape(desc), body))
-FIG_HTML = ''.join(fig_pages)
-md = read(PKG / 'DESIGN.md')
-tokens = json.loads(read(PKG / 'tokens.json'))
+FIG_HTML = pantallas_page()
 
 
 def section(title_start, until=None):
@@ -222,7 +195,7 @@ repl = {
         'primitive': {k: v['value'] for k, v in tokens['primitive'].items()},
         'size': {k: v['value'] for k, v in tokens['size'].items()},
         'textStyles': text_styles, 'checklist': checklist, 'rules': rules,
-        'shadows': SHADOWS, 'svgs': svgs, 'logo': logo_sm, 'fig': fig,
+        'shadows': SHADOWS, 'svgs': svgs, 'logo': logo_sm,
     }),
     'LOTTIES_JSON': js(lotties),
     'FIGMA_PAGES': FIG_HTML,

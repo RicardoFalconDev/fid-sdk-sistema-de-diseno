@@ -327,19 +327,28 @@ td.wrap{white-space:normal}
 @media (max-width:980px){.live{grid-template-columns:minmax(0,1fr)}}
 
 /* Componentes de Figma */
-.fig-stage{background:var(--bg-default);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);padding:var(--sp-4);display:flex;align-items:center;justify-content:center;min-height:180px;overflow:auto}
-.fig-stage img{max-width:100%;height:auto;display:block}
-.figgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0 var(--sp-6)}
-.figgrid figure{margin:0;border:1px solid var(--stroke-subtle);border-radius:var(--radius-md);overflow:hidden;display:flex;flex-direction:column}
-.figgrid .im{flex:1;display:flex;align-items:center;justify-content:center;min-height:96px;background:var(--bg-default);padding:var(--sp-2)}
-.figgrid img{max-width:100%;height:auto;display:block}
-.figgrid figcaption{font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary);padding:var(--sp-2) var(--sp-3);border-top:1px solid var(--stroke-subtle);background:var(--bg-surface)}
-.varchips{display:flex;flex-wrap:wrap;gap:var(--sp-1);margin-top:var(--sp-3);font-size:var(--font-size-12);color:var(--text-tertiary);align-items:center}
-.varchips code{font-size:11px}
-.figinfo p{margin:0 0 var(--sp-2)}
-.figinfo code{font-size:12px;white-space:normal;word-break:break-word}
-.figgrid figcaption{display:flex;flex-direction:column;gap:2px}
-.figgrid figcaption .uso{color:var(--text-tertiary)}
+.ptwrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:var(--sp-6);align-items:start;margin:var(--sp-4) 0 var(--sp-8)}
+.ptimg{position:sticky;top:var(--sp-6);border:1px solid var(--stroke-default);border-radius:var(--radius-lg);background:var(--bg-surface)}
+.ptimg img{display:block;width:100%;height:auto;border-radius:var(--radius-lg)}
+.spot{position:absolute;padding:0;margin:0;background:transparent;border:0;border-radius:var(--radius-sm);cursor:pointer;outline:2px solid transparent;outline-offset:1px}
+.spot span{position:absolute;top:-9px;left:-9px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:var(--bg-inverse);color:var(--text-inverse);font:600 11px/18px var(--font-family-default),system-ui,sans-serif;text-align:center}
+.spot.big span{top:8px;left:8px}
+.spot:hover,.spot:focus-visible,.spot.on{outline-color:var(--stroke-primary);background:color-mix(in srgb,var(--stroke-primary) 8%,transparent)}
+.spot.big:hover,.spot.big.on{background:transparent}
+.spot:hover span,.spot.on span{background:var(--stroke-primary)}
+.ptlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.ptlist li{display:flex;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--radius-md);cursor:default;outline:none}
+.ptlist li:hover,.ptlist li:focus-visible,.ptlist li.on{background:var(--bg-surface);box-shadow:inset 0 0 0 1px var(--stroke-subtle)}
+.ptlist .num{flex:none;width:20px;height:20px;border-radius:999px;background:var(--bg-subtle);color:var(--text-primary);font-size:11px;font-weight:600;line-height:20px;text-align:center;margin-top:1px}
+.ptlist li.on .num{background:var(--stroke-primary);color:var(--text-inverse)}
+.ptlist b{font-size:var(--font-size-14);line-height:var(--font-line-height-20);font-weight:600;color:var(--text-primary)}
+.ptlist p{margin:2px 0 var(--sp-1);font-size:var(--font-size-12);line-height:var(--font-line-height-16);color:var(--text-secondary)}
+.ptlist .tag{font-size:var(--font-size-12);color:var(--text-brand);font-weight:500;margin-left:var(--sp-1)}
+.ptlist .tks{display:flex;flex-wrap:wrap;gap:4px var(--sp-2);align-items:baseline}
+.ptlist .tks code{font-size:11px}
+.ptlist .tk{white-space:nowrap}
+.ptlist .tks small{font-size:11px;color:var(--text-tertiary)}
+@media (max-width:1100px){.ptwrap{grid-template-columns:minmax(0,1fr)}.ptimg{position:relative;top:0}}
 /* ═════ Responsive ═════ */
 @media (max-width:1180px){
   .layout{grid-template-columns:minmax(0,1fr)}
@@ -399,7 +408,7 @@ td.wrap{white-space:normal}
   <p>Es la referencia completa para diseñar e implementar el SDK de FID: los fundamentos visuales, los componentes, la personalización de marca, la accesibilidad y el código. Todo sale de los tokens del archivo de Figma “FID SDK — Variables”; si algo de acá contradice a Figma, gana Figma.</p>
   <div class="cards">
     <div class="card"><a href="#/color"><h4>Fundamentos</h4><p>Color, tipografía, espaciado, radios y bordes, elevación, íconos, ilustraciones y Lotties.</p></a></div>
-    <div class="card"><a href="#/c-acciones"><h4>Componentes</h4><p>Todos los componentes que usan las pantallas del SDK, exportados de Figma, y las recetas de código del paquete.</p></a></div>
+    <div class="card"><a href="#/pantallas"><h4>Componentes</h4><p>Pantallas reales del SDK con el token de cada parte, y las recetas de código del paquete.</p></a></div>
     <div class="card brand"><a href="#/personalizacion"><h4>Personalización</h4><p>Las cuatro propiedades que define cada cliente y cómo se aplican en el SDK.</p></a></div>
     <div class="card"><a href="#/accesibilidad"><h4>Calidad</h4><p>Accesibilidad, contraste y la lista de verificación antes de entregar.</p></a></div>
   </div>
@@ -1334,28 +1343,20 @@ function initElLive() {
 var INIT = { botones: initBtnLive, controles: initCtlLive, tipografia: initTypeLive, espaciado: initSpLive, radios: initRadLive, elevacion: initElLive };
 
 
-/* ═════ Componentes de Figma: elegir variante ═════ */
-function initFig(root) {
-  var d = DATA.fig[root.dataset.fig], sels = $$('select[data-p]', root);
-  var cur = Object.assign({}, d.cells[0].vp);
-  sels.forEach(function (sel) {
-    var p = sel.dataset.p, seen = [];
-    d.cells.forEach(function (c) { if (seen.indexOf(c.vp[p]) < 0) seen.push(c.vp[p]); });
-    sel.innerHTML = seen.map(function (v) { return '<option>' + esc(v) + '</option>'; }).join('');
-    sel.addEventListener('change', function () { cur[p] = sel.value; pick(p); });
+/* ═════ Tokens en las pantallas: parte ↔ lista ═════ */
+function initPantallas(root) {
+  $$('.ptwrap', root).forEach(function (w) {
+    function on(n) { $$('[data-n]', w).forEach(function (x) { x.classList.toggle('on', x.dataset.n === n); }); }
+    $$('[data-n]', w).forEach(function (x) {
+      x.addEventListener('mouseenter', function () { on(x.dataset.n); });
+      x.addEventListener('focus', function () { on(x.dataset.n); });
+      x.addEventListener('mouseleave', function () { on(null); });
+      x.addEventListener('blur', function () { on(null); });
+    });
+    $$('.spot', w).forEach(function (sp) {
+      sp.addEventListener('click', function () { var li = $('li[data-n="' + sp.dataset.n + '"]', w); li.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); on(sp.dataset.n); });
+    });
   });
-  function score(c, changed) { var n = 0; for (var k in cur) { if (c.vp[k] === cur[k]) n += (k === changed ? 100 : 1); } return n; }
-  function pick(changed) {
-    var best = d.cells[0], bs = -1;
-    d.cells.forEach(function (c) { var s = score(c, changed); if (s > bs) { bs = s; best = c; } });
-    var exact = d.props.every(function (k) { return best.vp[k] === cur[k]; });
-    cur = Object.assign({}, best.vp);
-    sels.forEach(function (sel) { sel.value = cur[sel.dataset.p]; });
-    var img = $('.fig-stage img', root); img.src = best.f; img.width = best.w; img.height = best.h;
-    $('.figinfo', root).innerHTML = '<p>' + esc(best.uso) + '</p>' + (best.figp === '—' ? '<p class="muted">Este componente no tiene variantes en Figma.</p>' : '<p class="muted">Propiedades en Figma</p><p><code>' + esc(best.figp) + '</code></p>');
-    $('.varchips', root).innerHTML = best.vars.length ? 'Variables vinculadas en Figma: ' + best.vars.map(function (v) { return '<code>' + esc(v) + '</code>'; }).join(' ') : '';
-  }
-  pick(null);
 }
 /* ═════ Navegación: páginas, pestañas e índice ═════ */
 var PAGES = $$('.page').map(function (p) { return { id: p.id.slice(3), title: p.dataset.title, g: p.dataset.g, desc: p.dataset.desc, el: p }; });
@@ -1371,7 +1372,7 @@ function show() {
   $('#pgTabs').innerHTML = panels.length < 2 ? '' : panels.map(function (x) { return '<a href="#/' + P.id + '/' + x.dataset.tab + '"' + (x.dataset.tab === tab ? ' aria-current="page"' : '') + '>' + x.dataset.label + '</a>'; }).join('');
   $$('#nav a').forEach(function (a) { a.classList.toggle('on', a.dataset.id === P.id); });
   $('#jump').value = P.id;
-  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); $$('.figlive', P.el).forEach(initFig); }
+  if (!built[P.id]) { if (BUILD[P.id]) BUILD[P.id](); built[P.id] = 1; if (INIT[P.id]) INIT[P.id](); if (P.id === 'pantallas') initPantallas(P.el); }
   var hasDemo = !!$$('.sdk-frame', P.el).filter(function (f) { return !f.closest('[data-fixed]'); }).length;
   $('#tabsbar').classList.toggle('solo', panels.length < 2); $('#tabsbar').classList.toggle('nodemo', !hasDemo); $('#tabsbar').classList.toggle('empty', panels.length < 2 && !hasDemo);
   applyDemo();
